@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>井下 敬翔 | Keito Inoshita</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fafaf8;--text:#1a1a18;--muted:#888880;--accent:#2a4a8e;--accent2:#c8502a;--border:#e4e4de;--card:#f4f4f0;--tag:#eef1f8}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'EB Garamond',Georgia,serif;background:var(--bg);color:var(--text);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.1rem 4rem;background:rgba(250,250,248,.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-decoration:none}
+.nav-links{display:flex;gap:1.8rem;list-style:none}
+.nav-links a{font-family:'DM Mono',monospace;font-size:.67rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+.nav-admin{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--border);text-decoration:none;transition:color .2s;padding:.3rem .6rem;border:1px solid transparent}
+.nav-admin:hover{color:var(--muted);border-color:var(--border)}
+
+/* TABS */
+.tabs-bar{position:sticky;top:55px;z-index:100;background:rgba(250,250,248,.97);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;scrollbar-width:none}
+.tabs-bar::-webkit-scrollbar{display:none}
+.tab-btn{font-family:'DM Mono',monospace;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;padding:.85rem 1.3rem;cursor:pointer;white-space:nowrap;transition:color .2s,border-color .2s}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-page{display:none}
+.tab-page.active{display:block}
+
+/* HERO */
+.hero{min-height:calc(100vh - 95px);display:grid;grid-template-columns:1.1fr 1fr;padding:0 4rem;gap:4rem;align-items:center;border-bottom:1px solid var(--border)}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1.3rem;opacity:0;animation:fadeUp .7s ease .1s forwards}
+.hero h1{font-size:clamp(2.4rem,4vw,3.8rem);font-weight:400;line-height:1.1;margin-bottom:1.3rem;opacity:0;animation:fadeUp .7s ease .25s forwards}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero-desc{font-size:.97rem;color:#555550;line-height:1.85;margin-bottom:1.8rem;max-width:480px;opacity:0;animation:fadeUp .7s ease .4s forwards}
+.hero-tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:2rem;opacity:0;animation:fadeUp .7s ease .5s forwards}
+.hero-tag{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;padding:.28rem .7rem;background:var(--tag);color:var(--accent);border:1px solid #c8d4f0}
+.hero-cta{display:flex;gap:.9rem;flex-wrap:wrap;opacity:0;animation:fadeUp .7s ease .6s forwards}
+.btn-primary{padding:.62rem 1.5rem;background:var(--text);color:var(--bg);font-family:'DM Mono',monospace;font-size:.67rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:background .2s,transform .15s;cursor:pointer;border:none}
+.btn-primary:hover{background:var(--accent);transform:translateY(-1px)}
+.btn-secondary{padding:.62rem 1.5rem;border:1px solid var(--border);color:var(--muted);font-family:'DM Mono',monospace;font-size:.67rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:border-color .2s,color .2s;cursor:pointer;background:none}
+.btn-secondary:hover{border-color:var(--text);color:var(--text)}
+.hero-visual{display:flex;justify-content:center;opacity:0;animation:fadeIn 1.2s ease .6s forwards}
+.profile-card{width:310px;background:var(--card);border:1px solid var(--border);padding:2.2rem}
+
+/* PHOTO — drop photo.jpg next to index.html */
+.profile-photo{width:80px;height:80px;border-radius:50%;margin-bottom:1.2rem;object-fit:cover;background:linear-gradient(135deg,#b8c8e8,#7090c8);display:flex;align-items:center;justify-content:center;font-family:'EB Garamond',serif;font-size:1.3rem;color:white;overflow:hidden}
+.profile-photo img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+
+.profile-card h3{font-size:1.1rem;font-weight:500;margin-bottom:.2rem}
+.profile-card .role{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.9rem}
+.profile-stats{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:1.1rem;border-top:1px solid var(--border);padding-top:1.1rem}
+.stat-num{font-size:1.35rem;font-weight:400}
+.stat-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.award-badge{display:inline-flex;align-items:center;gap:.3rem;font-family:'DM Mono',monospace;font-size:.59rem;letter-spacing:.08em;color:var(--accent2);margin-top:.75rem}
+
+/* NEWS */
+.news-section{padding:3.5rem 4rem;border-bottom:1px solid var(--border)}
+.section-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem}
+.section-label{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+.section-title{font-size:clamp(1.6rem,2.5vw,2.2rem);font-weight:400;line-height:1.2}
+.section-title em{font-style:italic}
+.section-intro{font-size:.93rem;color:var(--muted);max-width:540px;margin-bottom:2.8rem}
+.news-list{display:flex;flex-direction:column}
+.news-item{display:grid;grid-template-columns:110px 1fr auto;align-items:start;padding:.8rem 0;border-bottom:1px solid var(--border);gap:1.1rem}
+.news-item:first-child{border-top:1px solid var(--border)}
+.news-date{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.1em;color:var(--muted);padding-top:.1rem}
+.news-text{font-size:.92rem;line-height:1.6}
+.nbadge{font-family:'DM Mono',monospace;font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;padding:.18rem .52rem;white-space:nowrap}
+.nb-award{background:#fff4f0;color:var(--accent2);border:1px solid #f8c8b4}
+.nb-pub{background:var(--tag);color:var(--accent);border:1px solid #c8d4f0}
+.nb-grant{background:#f0f8f0;color:#2a6e3a;border:1px solid #b4d8b8}
+.nb-media{background:#f8f4e8;color:#6e4e1a;border:1px solid #d8c898}
+.empty-note{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted);padding:1.5rem 0;letter-spacing:.08em}
+
+/* PAGE SECTION */
+.page-section{padding:4.5rem 4rem;border-bottom:1px solid var(--border)}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:5rem}
+.about-body{font-size:.98rem;color:#444440;line-height:1.9}
+.about-body p+p{margin-top:1rem}
+.info-row{display:flex;flex-direction:column;padding:.82rem 0;border-bottom:1px solid var(--border)}
+.info-row:first-child{border-top:1px solid var(--border)}
+.info-key{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem}
+.info-val{font-size:.88rem}
+
+/* RESEARCH */
+.research-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.research-card{background:var(--card);border:1px solid var(--border);padding:1.7rem;transition:border-color .2s,transform .2s}
+.research-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+.rtag{font-family:'DM Mono',monospace;font-size:.59rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.65rem}
+.research-card h3{font-size:1rem;font-weight:500;margin-bottom:.55rem;line-height:1.4}
+.research-card p{font-size:.86rem;color:var(--muted);line-height:1.7}
+
+/* PUBLICATIONS */
+.pub-filters{display:flex;gap:.45rem;flex-wrap:wrap;margin-bottom:2.2rem}
+.pub-filter{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.32rem .85rem;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer;transition:.2s}
+.pub-filter.active{background:var(--text);color:var(--bg);border-color:var(--text)}
+.pub-list{display:flex;flex-direction:column}
+.pub-item{display:grid;grid-template-columns:78px 1fr;gap:1.6rem;padding:1.5rem 0;border-bottom:1px solid var(--border)}
+.pub-item:first-child{border-top:1px solid var(--border)}
+.pub-item.hidden{display:none}
+.pub-year{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted);padding-top:.2rem}
+.pub-title{font-size:.95rem;font-weight:500;margin-bottom:.28rem;line-height:1.5}
+.pub-authors{font-size:.83rem;color:var(--muted);font-style:italic;margin-bottom:.22rem}
+.pub-authors strong{font-style:normal;color:var(--text);font-weight:500}
+.pub-venue{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.08em;color:var(--accent)}
+.pub-badges{display:flex;gap:.38rem;flex-wrap:wrap;margin-top:.45rem}
+.pbadge{font-family:'DM Mono',monospace;font-size:.57rem;letter-spacing:.08em;padding:.14rem .48rem}
+.pb-best{background:#fff4f0;color:var(--accent2);border:1px solid #f8c8b4}
+.pb-first{background:var(--tag);color:var(--accent);border:1px solid #c8d4f0}
+.rmap-note{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.08em;color:var(--muted);margin-bottom:1.8rem;padding:.7rem 1rem;border-left:2px solid var(--accent);background:var(--tag)}
+.rmap-note a{color:var(--accent)}
+
+/* ACTIVITIES */
+.activities-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
+.agroup h3{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1.1rem}
+.activity-list{display:flex;flex-direction:column}
+.activity-item{display:flex;gap:1rem;padding:.72rem 0;border-bottom:1px solid var(--border);font-size:.88rem;line-height:1.6}
+.activity-item:first-child{border-top:1px solid var(--border)}
+.ayear{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--muted);white-space:nowrap;padding-top:.2rem;min-width:55px}
+
+/* AWARDS */
+.awards-cols{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.atitle{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+.award-item{display:flex;gap:.7rem;align-items:flex-start;padding:.68rem 0;border-bottom:1px solid var(--border);font-size:.88rem}
+.award-item:first-child{border-top:1px solid var(--border)}
+.aicon{flex-shrink:0;padding-top:.1rem}
+
+/* GRANTS */
+.grants-list{display:flex;flex-direction:column}
+.grant-item{display:grid;grid-template-columns:1fr auto;gap:2rem;padding:1.3rem 0;border-bottom:1px solid var(--border);align-items:start}
+.grant-item:first-child{border-top:1px solid var(--border)}
+.grant-title{font-size:.95rem;font-weight:500;margin-bottom:.28rem;line-height:1.5}
+.grant-org{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.08em;color:var(--accent)}
+.grant-amount{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--muted);white-space:nowrap;text-align:right}
+.grant-period{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--muted);margin-top:.18rem;text-align:right}
+
+/* COLUMN */
+.column-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.column-card{background:var(--card);border:1px solid var(--border);padding:1.7rem;cursor:pointer;transition:border-color .2s,transform .2s}
+.column-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+.col-date{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;color:var(--muted);margin-bottom:.65rem}
+.column-card h3{font-size:.97rem;font-weight:500;margin-bottom:.55rem;line-height:1.45}
+.column-card p{font-size:.86rem;color:var(--muted);line-height:1.7}
+.col-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center}
+.col-modal-overlay.open{display:flex}
+.col-modal{background:var(--bg);border:1px solid var(--border);padding:3rem;max-width:680px;width:90%;max-height:85vh;overflow-y:auto;position:relative}
+.col-modal h2{font-size:1.5rem;font-weight:400;margin-bottom:.5rem;line-height:1.3}
+.col-modal .cmeta{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--muted);margin-bottom:1.8rem}
+.col-modal .cbody{font-size:1rem;line-height:1.9;color:#444440}
+.col-modal .cbody p+p{margin-top:1rem}
+.col-modal-close{position:absolute;top:1.2rem;right:1.4rem;font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);cursor:pointer;background:none;border:none}
+.col-modal-close:hover{color:var(--text)}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem}
+.contact-desc{font-size:.97rem;color:#555550;line-height:1.9}
+.contact-form{display:flex;flex-direction:column;gap:.9rem}
+.form-group{display:flex;flex-direction:column;gap:.35rem}
+.form-label{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.form-input,.form-select,.form-textarea{width:100%;padding:.6rem .85rem;border:1px solid var(--border);background:var(--bg);font-family:'EB Garamond',Georgia,serif;font-size:.93rem;color:var(--text);outline:none;transition:border-color .2s;appearance:none}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--accent)}
+.form-textarea{resize:vertical;min-height:115px}
+.form-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7'%3E%3Cpath d='M0 0l5.5 7L11 0z' fill='%23888'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .85rem center;padding-right:2.4rem}
+.form-success{display:none;font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.1em;color:#2a6e3a;padding:.7rem 1rem;background:#f0f8f0;border:1px solid #b4d8b8}
+.contact-links{margin-top:1.8rem;display:flex;flex-direction:column}
+.contact-link{display:flex;align-items:center;justify-content:space-between;padding:.95rem 0;border-bottom:1px solid var(--border);text-decoration:none;color:var(--text);transition:color .2s}
+.contact-link:first-child{border-top:1px solid var(--border)}
+.contact-link:hover{color:var(--accent)}
+.cl-label{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase}
+
+/* FOOTER */
+footer{padding:2rem 4rem;display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;color:var(--muted)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* RESPONSIVE */
+@media(max-width:940px){
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  .hero{grid-template-columns:1fr;padding:3rem 1.5rem;min-height:auto}
+  .hero-visual{display:none}
+  .news-section,.page-section{padding:3rem 1.5rem}
+  .about-grid,.contact-grid,.awards-cols,.activities-grid{grid-template-columns:1fr;gap:2rem}
+  .research-grid,.column-grid{grid-template-columns:1fr}
+  .pub-item{grid-template-columns:55px 1fr;gap:.9rem}
+  .grant-item{grid-template-columns:1fr;gap:.25rem}
+  footer{padding:1.6rem 1.5rem;flex-direction:column;gap:.4rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">Keito Inoshita</a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showTab('home');return false">Home</a></li>
+    <li><a href="#" onclick="showTab('publications');return false">Publications</a></li>
+    <li><a href="#" onclick="showTab('activities');return false">Activities</a></li>
+    <li><a href="#" onclick="showTab('column');return false">Column</a></li>
+    <li><a href="#" onclick="showTab('contact');return false">Contact</a></li>
+  </ul>
+  <a class="nav-admin" href="admin.html">⚙ Admin</a>
+</nav>
+
+<div class="tabs-bar">
+  <button class="tab-btn active" onclick="showTab('home')" data-tab="home">Home</button>
+  <button class="tab-btn" onclick="showTab('about')" data-tab="about">About</button>
+  <button class="tab-btn" onclick="showTab('research')" data-tab="research">Research</button>
+  <button class="tab-btn" onclick="showTab('publications')" data-tab="publications">Publications</button>
+  <button class="tab-btn" onclick="showTab('activities')" data-tab="activities">Activities</button>
+  <button class="tab-btn" onclick="showTab('awards')" data-tab="awards">Awards</button>
+  <button class="tab-btn" onclick="showTab('grants')" data-tab="grants">Grants</button>
+  <button class="tab-btn" onclick="showTab('column')" data-tab="column">Column</button>
+  <button class="tab-btn" onclick="showTab('contact')" data-tab="contact">Contact</button>
+</div>
+
+<!-- ═══ HOME ═══ -->
+<div class="tab-page active" id="page-home">
+  <section class="hero">
+    <div class="hero-text">
+      <p class="hero-eyebrow">Researcher · Data Scientist</p>
+      <h1>井下 敬翔<br><em>Keito Inoshita</em></h1>
+      <p class="hero-desc" id="hero-desc-text">関西大学大学院商学研究科 博士後期課程（JST SPRINGスカラシップ）/ 滋賀大学・立命館大学 客員研究員。大規模言語モデル（LLM）・感情認識・AIバイアス分析を専門とし、Well-beingを実現するAI基盤技術の研究に取り組んでいます。</p>
+      <div class="hero-tags">
+        <span class="hero-tag">Large Language Models</span>
+        <span class="hero-tag">Sentiment Analysis</span>
+        <span class="hero-tag">AI Bias</span>
+        <span class="hero-tag">Well-being AI</span>
+        <span class="hero-tag">NLP</span>
+      </div>
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="showTab('publications')">業績を見る</button>
+        <button class="btn-secondary" onclick="showTab('contact')">お問い合わせ</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="profile-card">
+        <!-- ★ PHOTO: place your photo file as "photo.jpg" in the same folder as index.html -->
+        <div class="profile-photo" id="profile-photo-wrap">
+          <img src="photo.jpg" alt="井下敬翔" onerror="this.style.display='none';this.parentNode.innerHTML+='井下'">
+        </div>
+        <h3>井下 敬翔</h3>
+        <p class="role">PhD Student · Kansai University</p>
+        <p style="font-size:.83rem;color:var(--muted)">LLM / Emotion AI / AI Bias / Well-being</p>
+        <div class="profile-stats">
+          <div><div class="stat-num" id="stat-pubs">33</div><div class="stat-label">Publications</div></div>
+          <div><div class="stat-num" id="stat-cite">—</div><div class="stat-label">Citations</div></div>
+          <div><div class="stat-num">7</div><div class="stat-label">Best Papers</div></div>
+          <div><div class="stat-num">8</div><div class="stat-label">Grants</div></div>
+        </div>
+        <div class="award-badge">🏆 Best Paper Award ×7</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWS -->
+  <section class="news-section">
+    <div class="section-header">
+      <div>
+        <p class="section-label">News &amp; Updates</p>
+        <h2 class="section-title">お知らせ</h2>
+      </div>
+    </div>
+    <div class="news-list" id="newsList">
+      <p class="empty-note" id="news-empty" style="display:none">まだお知らせはありません。管理画面から追加できます。</p>
+    </div>
+  </section>
+</div>
+
+<!-- ═══ ABOUT ═══ -->
+<div class="tab-page" id="page-about">
+  <section class="page-section">
+    <p class="section-label reveal">About</p>
+    <h2 class="section-title reveal">井下 敬翔について</h2>
+    <div class="about-grid">
+      <div class="about-body reveal">
+        <p>関西大学大学院商学研究科博士後期課程（JST SPRINGスカラシップ研究学生）、滋賀大学データサイエンス・AIイノベーション研究推進センター客員研究員、立命館グローバル・イノベーション研究機構客員研究員。</p>
+        <p>大規模言語モデル（LLM）を中核に、感情認識・AIバイアス・Well-being支援AIの研究を展開。特にLLMの政治的・感情的バイアスの定量評価と除去手法の研究が国際的に評価されており、国際会議Best Paper Awardを7件受賞。</p>
+        <p>研究の枠を超え、ビジネスプランコンテスト・政策提言・社会貢献活動にも積極的に取り組む。JST次世代研究者挑戦的研究プログラムをはじめ8件の競争的資金を獲得。NeurIPS・IEEE TAC等の主要国際誌・会議のReviewerも務める。</p>
+      </div>
+      <div class="reveal">
+        <div class="info-row"><span class="info-key">Primary Affiliation</span><span class="info-val">関西大学大学院 商学研究科 博士後期課程</span></div>
+        <div class="info-row"><span class="info-key">Visiting Researcher</span><span class="info-val">滋賀大学 / 立命館大学</span></div>
+        <div class="info-row"><span class="info-key">Research Area</span><span class="info-val">LLM、感情認識、AIバイアス、Well-being AI</span></div>
+        <div class="info-row"><span class="info-key">Degree</span><span class="info-val">修士（データサイエンス）滋賀大学 2025年3月</span></div>
+        <div class="info-row"><span class="info-key">ORCID</span><span class="info-val">0009-0006-6854-7231</span></div>
+        <div class="info-row"><span class="info-key">Email</span><span class="info-val">inosita.2865@gmail.com</span></div>
+        <div class="info-row"><span class="info-key">Qualifications</span><span class="info-val">統計検定準1級 / 基本情報技術者 / 宅地建物取引士 / データサイエンス発展</span></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══ RESEARCH ═══ -->
+<div class="tab-page" id="page-research">
+  <section class="page-section">
+    <p class="section-label reveal">Research</p>
+    <h2 class="section-title reveal">研究<em>テーマ</em></h2>
+    <p class="section-intro reveal">LLMを核に、感情・バイアス・データ生成・社会応用の四領域を横断する研究を展開しています。</p>
+    <div class="research-grid">
+      <div class="research-card reveal"><p class="rtag">LLM Bias Analysis</p><h3>LLMのバイアス分析と除去</h3><p>大規模言語モデルの政治的・感情的バイアスを定量評価し、能動的・受動的アプローチによる除去手法を研究。安全保障分野向けコーパス開発も実施。</p></div>
+      <div class="research-card reveal"><p class="rtag">Emotion AI</p><h3>感情認識とWell-being支援</h3><p>職場環境における感情シミュレーション・マルチモーダル感情認識を研究。ウェアラブル×AIによるメンタルヘルス支援システムの開発を目指す。</p></div>
+      <div class="research-card reveal"><p class="rtag">Synthetic Data</p><h3>合成データ生成</h3><p>LLMを活用した感情データの自動生成・拡張技術を研究。倫理的制約を受けない感情データ生成と自己進化型感情認識AIの構築に取り組む。</p></div>
+      <div class="research-card reveal"><p class="rtag">Model Merging</p><h3>進化的モデルマージ</h3><p>進化的アルゴリズムを応用した多段階モデルマージ手法を開発。感情分析・アスペクト分析に特化したLLMの構築と評価を行っている。</p></div>
+      <div class="research-card reveal"><p class="rtag">NLP Applications</p><h3>自然言語処理の応用</h3><p>皮肉検出・学名分類・法律知識評価など多様なLLM応用研究。デジタルヒューマニティーズとNLPの融合領域にも取り組む。</p></div>
+      <div class="research-card reveal"><p class="rtag">Social AI</p><h3>社会・政策へのAI応用</h3><p>Twitter上の戦争認識分析、GPTの法律知識評価、AIガバナンス指針策定など、社会課題に向き合うAI研究を展開する。</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══ PUBLICATIONS ═══ -->
+<div class="tab-page" id="page-publications">
+  <section class="page-section">
+    <p class="section-label reveal">Publications</p>
+    <h2 class="section-title reveal">発表<em>業績</em></h2>
+    <div class="rmap-note reveal">📌 最新の完全リストは <a href="https://researchmap.jp/keito_inoshita" target="_blank">researchmap</a> をご参照ください。論文数はresearchmapから自動取得しています。</div>
+    <div class="pub-filters reveal">
+      <button class="pub-filter active" onclick="filterPubs(this,'all')">All</button>
+      <button class="pub-filter" onclick="filterPubs(this,'journal')">国際ジャーナル</button>
+      <button class="pub-filter" onclick="filterPubs(this,'conf')">国際会議</button>
+      <button class="pub-filter" onclick="filterPubs(this,'domestic')">国内発表</button>
+      <button class="pub-filter" onclick="filterPubs(this,'preprint')">Preprint</button>
+      <button class="pub-filter" onclick="filterPubs(this,'misc')">Misc</button>
+    </div>
+    <div class="pub-list" id="pubList">
+      <!-- Publications injected by JS from data.js defaults -->
+    </div>
+  </section>
+</div>
+
+<!-- ═══ ACTIVITIES ═══ -->
+<div class="tab-page" id="page-activities">
+  <section class="page-section">
+    <p class="section-label reveal">Academic Activities</p>
+    <h2 class="section-title reveal">学術・<em>その他活動</em></h2>
+    <div class="activities-grid">
+      <div class="agroup reveal"><h3>Reviewer</h3><div class="activity-list" id="reviewer-list"></div></div>
+      <div>
+        <div class="agroup reveal" style="margin-bottom:2.2rem"><h3>Committee / Organization</h3><div class="activity-list" id="committee-list"></div></div>
+        <div class="agroup reveal"><h3>Invited Talks / Social</h3><div class="activity-list" id="talks-list"></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══ AWARDS ═══ -->
+<div class="tab-page" id="page-awards">
+  <section class="page-section">
+    <p class="section-label reveal">Awards</p>
+    <h2 class="section-title reveal">受賞<em>歴</em></h2>
+    <div class="awards-cols">
+      <div class="reveal"><p class="atitle">研究に関する受賞</p><div id="awards-research"></div></div>
+      <div class="reveal"><p class="atitle">コンテスト・学業等</p><div id="awards-other"></div></div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══ GRANTS ═══ -->
+<div class="tab-page" id="page-grants">
+  <section class="page-section">
+    <p class="section-label reveal">Grants &amp; Funding</p>
+    <h2 class="section-title reveal">競争的資金等<em>研究課題</em></h2>
+    <div class="grants-list" id="grants-list"></div>
+  </section>
+</div>
+
+<!-- ═══ COLUMN ═══ -->
+<div class="tab-page" id="page-column">
+  <section class="page-section">
+    <p class="section-label reveal">Research Column</p>
+    <h2 class="section-title reveal">研究<em>コラム</em></h2>
+    <p class="section-intro reveal">LLM・感情AI・社会とAIの関係について、研究者の視点から定期的に発信します。</p>
+    <div class="column-grid" id="column-grid">
+      <p class="empty-note" id="col-empty">まだコラムはありません。管理画面から追加できます。</p>
+    </div>
+  </section>
+</div>
+
+<!-- Column Modal -->
+<div class="col-modal-overlay" id="colModal">
+  <div class="col-modal">
+    <button class="col-modal-close" onclick="closeColModal()">✕ 閉じる</button>
+    <p class="cmeta" id="modalDate"></p>
+    <h2 id="modalTitle"></h2>
+    <div class="cbody" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ═══ CONTACT ═══ -->
+<div class="tab-page" id="page-contact">
+  <section class="page-section">
+    <p class="section-label reveal">Contact</p>
+    <h2 class="section-title reveal">お問い<em>合わせ</em></h2>
+    <div class="contact-grid">
+      <div class="reveal">
+        <p class="contact-desc">共同研究・研究相談・講演依頼・メディア取材・学生からのご相談など、お気軽にご連絡ください。原則として5営業日以内にご返信いたします。</p>
+        <div class="contact-links">
+          <a href="mailto:inosita.2865@gmail.com" class="contact-link"><span class="cl-label">Email</span><span>→</span></a>
+          <a href="https://researchmap.jp/keito_inoshita" target="_blank" class="contact-link"><span class="cl-label">researchmap</span><span>→</span></a>
+          <a href="https://orcid.org/0009-0006-6854-7231" target="_blank" class="contact-link"><span class="cl-label">ORCID</span><span>→</span></a>
+          <a href="https://hip-snapdragon-86e.notion.site/Keito-Inoshita-43419e9e14ee40399585d1111e296ed9" target="_blank" class="contact-link"><span class="cl-label">Notion Portfolio</span><span>→</span></a>
+          <a href="#" id="scholar-link" class="contact-link"><span class="cl-label">Google Scholar</span><span>→</span></a>
+          <a href="#" id="cv-link" class="contact-link"><span class="cl-label">CV (PDF)</span><span>→</span></a>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="contact-form" id="contactForm">
+          <div class="form-group"><label class="form-label">お名前</label><input type="text" class="form-input" id="cf-name" placeholder="山田 太郎"></div>
+          <div class="form-group"><label class="form-label">メールアドレス</label><input type="email" class="form-input" id="cf-email" placeholder="example@email.com"></div>
+          <div class="form-group">
+            <label class="form-label">お問い合わせの種類</label>
+            <select class="form-select" id="cf-type">
+              <option value="">選択してください</option>
+              <option>共同研究のご相談</option>
+              <option>講演・登壇依頼</option>
+              <option>メディア取材</option>
+              <option>学術的なご質問</option>
+              <option>その他</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label">メッセージ</label><textarea class="form-textarea" id="cf-msg" placeholder="お問い合わせ内容をご記入ください..."></textarea></div>
+          <div class="form-success" id="formSuccess">✓ 送信されました。近日中にご返信いたします。</div>
+          <button class="btn-primary" onclick="submitForm()" style="align-self:flex-start;margin-top:.4rem">送信する</button>
+          <p style="font-family:'DM Mono',monospace;font-size:.58rem;color:var(--muted);margin-top:.7rem;line-height:1.6" id="form-note">※ 実際の送信にはFormspreeなど外部サービスの設定が必要です。管理画面で送信先URLを設定できます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <span class="footer-copy">© <span id="fyear"></span> Keito Inoshita · All rights reserved</span>
+  <span class="footer-copy">Kansai University · Graduate School of Commerce</span>
+</footer>
+
+<script>
+// ─── DEFAULT DATA (used if localStorage is empty) ───────────────────────────
+const DEFAULTS = {
+  news: [
+    {id:1,date:"2026.02",text:"「Persona-Based Synthetic Data Generation Using Multi-Stage Conditioning with LLMs for Emotion Recognition」がInternational Journal of Activity and Behavior Computingに採録。",cat:"pub"},
+    {id:2,date:"2026.02",text:"JST次世代研究者挑戦的研究プログラム採択。Well-beingを実現するマルチモーダル感情認識システムの研究推進（2025–2028）。",cat:"grant"},
+    {id:3,date:"2025.08",text:"IEEE HPCC 2025 Best Paper Award 受賞（GNN-Enhanced Multimodal Fusion for Smart Health Oriented Food Recommendation）。",cat:"award"},
+    {id:4,date:"2025.08",text:"IEEE ICoAILO 2025 Best Paper Award 受賞（Enhancing Sentiment Analysis Accuracy Using LLMs）。",cat:"award"},
+    {id:5,date:"2025.07",text:"NLDB 2025 Best Paper Award 受賞（Multi-Scale Convolutional Fusion with Contrastive Feature Alignment）。",cat:"award"},
+    {id:6,date:"2024.10",text:"IEEE BDCloud 2024 Best Paper Award 受賞（Sentiment Bias and Security Analysis in Training Datasets of LLMs）。",cat:"award"},
+  ],
+  columns: [
+    {id:1,date:"2026.03.01",title:"LLMはなぜ「バイアス」を持つのか：訓練データの偏りと社会的影響",body:"大規模言語モデルが示す政治的・感情的バイアスの構造を解説。なぜバイアスが生まれ、どう対処すべきか研究者の視点から考えます。\n\nLLMの訓練データはWebクロールや書籍等の膨大なテキストから構成されますが、そこには人間社会の偏見・格差・イデオロギーが色濃く反映されています。モデルはこれらを「正しい言語パターン」として学習してしまうため、政治的発言や感情的判断に系統的な偏りが生じます。\n\n私の研究では、安全保障・紛争構造に関する日本語コーパスを独自開発し、LLMの政治的バイアスを定量的に測定・可視化する手法を提案しています。"},
+  ],
+  publications: [
+    {year:"2026",title:"Persona-Based Synthetic Data Generation Using Multi-Stage Conditioning with Large Language Models for Emotion Recognition",authors:"<strong>Keito Inoshita</strong>, Rushia Harada",venue:"Int. Journal of Activity and Behavior Computing, Mar. 2026",cat:"journal",badges:["first","peer"]},
+    {year:"2026",title:"KDDA: A Knowledge-Driven Domain and Diversity Alignment Framework for Emotion Data Generation with LLMs",authors:"<strong>Keito Inoshita</strong>, Hayato Tomisu, Xiaokang Zhou, Akira Kawai, Katsutoshi Yada",venue:"Int. Journal of Activity and Behavior Computing, Mar. 2026",cat:"journal",badges:["first","peer"]},
+    {year:"2025",title:"Automated Labeling of Scientific Names and Etymological Trend Analysis in Phytophagous Arthropods Using LLM",authors:"Kota Nojiri, <strong>Keito Inoshita</strong>, Haruto Sugeno",venue:"Zoological Science, vol. 42, issue. 5, Oct. 2025",cat:"journal",badges:["peer"]},
+    {year:"2025",title:"Multi-Scale Convolutional Fusion with Contrastive Feature Alignment for Imbalanced Data Classification",authors:"<strong>Keito Inoshita</strong>, Takato Ueno, Xiaokang Zhou",venue:"NLDB 2025, vol. 15836, Jul. 2025",cat:"conf",badges:["first","best"]},
+    {year:"2025",title:"GNN-Enhanced Multimodal Fusion with Contrastive Learning for Smart Health Oriented Food Recommendation System",authors:"Ryutaro Matsuoka, <strong>Keito Inoshita</strong>, Xiaokang Zhou, Zhigao Zheng, Akira Kawai, Katsutoshi Yada",venue:"IEEE HPCC 2025, pp. 864-871, Aug. 2025",cat:"conf",badges:["best"]},
+    {year:"2025",title:"Enhancing Sentiment Analysis Accuracy and Evaluating Task Affinity Using Large Language Models",authors:"<strong>Keito Inoshita</strong>",venue:"IEEE ICoAILO 2025, pp. 181-187, Aug. 2025",cat:"conf",badges:["first","best"]},
+    {year:"2024",title:"Evolutionary Expert Model Merging with Task-Adaptive Iterative Self-Improvement for LLM on Aspect-Based Sentiment Analysis",authors:"<strong>Keito Inoshita</strong>",venue:"IEEE IoTaIS 2024, pp. 130-136, Nov. 2024",cat:"conf",badges:["first","best"]},
+    {year:"2024",title:"Multi-Stage Evolutionary Model Merging with Meta Data Driven Curriculum Learning for Sentiment-Specialized LLM",authors:"<strong>Keito Inoshita</strong>, Xiaokang Zhou, Akira Kawai",venue:"IEEE DSS 2024, pp. 58-65, Dec. 2024",cat:"conf",badges:["first","best"]},
+    {year:"2024",title:"Sentiment Bias and Security Analysis in Training Datasets of Large Language Models",authors:"<strong>Keito Inoshita</strong>, Xiaokang Zhou",venue:"IEEE BDCloud 2024, pp. 1-8, Oct. 2024",cat:"conf",badges:["first","best"]},
+    {year:"2024",title:"Corpus Development Based on Conflict Structures in the Security Field and LLM Bias Verification",authors:"<strong>Keito Inoshita</strong>",venue:"NLP4DH @ EMNLP 2024, pp. 504-512, Nov. 2024",cat:"conf",badges:["first","peer"]},
+    {year:"2024",title:"Sentiment Analysis of Japanese Twitter Users Regarding the Ukraine-Russia War and Its Implications for Security Policy",authors:"<strong>Keito Inoshita</strong>",venue:"ICITACEE 2024, pp. 338-343, Aug. 2024",cat:"conf",badges:["first","best"]},
+    {year:"2024",title:"Multi-Domain and Multi-View Oriented Deep Neural Network for Sentiment Analysis in Large Language Models",authors:"<strong>Keito Inoshita</strong>, Xiaokang Zhou, Shohei Shimizu",venue:"IEEE iThings 2024, pp. 149-156, Aug. 2024",cat:"conf",badges:["first","peer"]},
+    {year:"2024",title:"Assessment of Conflict Structure Recognition and Bias Impact in Japanese LLMs",authors:"<strong>Keito Inoshita</strong>",venue:"TIMES-iCON 2024, pp. 1-5, Jun. 2024",cat:"conf",badges:["first","peer"]},
+    {year:"2026",title:"World model inspired sarcasm reasoning with large language model agents",authors:"<strong>Keito Inoshita</strong>, Shinnosuke Mizuno",venue:"arXiv, Apr. 2026",cat:"preprint",badges:["first"]},
+    {year:"2026",title:"Argument Rarity-based Originality Assessment for AI-Assisted Writing",authors:"<strong>Keito Inoshita</strong>, Michiaki Omura et al.",venue:"arXiv, Feb. 2026",cat:"preprint",badges:["first"]},
+    {year:"2025",title:"C-DIRA: Computationally Efficient Dynamic ROI Routing and Domain-Invariant Adversarial Learning for Lightweight Driver Behavior Recognition",authors:"<strong>Keito Inoshita</strong>",venue:"arXiv, Dec. 2025",cat:"preprint",badges:["first"]},
+    {year:"2024",title:"Bias Examination of International Conflict Structures in LLMs and Debiasing Methods Based on Active and Passive Approaches",authors:"<strong>Keito Inoshita</strong>",venue:"じんもんこん2024論文集, vol. 2024, pp. 167-174, Dec. 2024",cat:"domestic",badges:["first","peer"]},
+    {year:"2025",title:"職場環境におけるマルチモーダル感情認識技術の現状と展望",authors:"<strong>井下敬翔</strong>, 尾崎博信",venue:"情報知識学会誌, vol. 35, issue. 2, pp. 151-156, Mar. 2025",cat:"domestic",badges:["first"]},
+    {year:"2025",title:"生成AIを活用した職場感情分析とWell-beingの向上",authors:"<strong>井下敬翔</strong>",venue:"地球・宇宙・未来, vol. 1, issue. 2, pp. 109-114, Apr. 2025",cat:"misc",badges:["first","invited"]},
+    {year:"2024",title:"スポーツの小型化とモジュール型小規模競技場によるウェルビーイングな都市デザイン",authors:"<strong>井下敬翔</strong>",venue:"月刊体育施設 12月号 pp.43-44 / 社会教育 vol.44, 2024",cat:"misc",badges:["first","invited"]},
+  ],
+  reviewers: [
+    {year:"—",text:"IEEE Transactions on Affective Computing"},
+    {year:"—",text:"Annual Conference on Neural Information Processing Systems (NeurIPS)"},
+    {year:"—",text:"Natural Language Processing for Digital Humanities"},
+    {year:"—",text:"日本認知科学会"},
+    {year:"—",text:"Information Fusion"},
+    {year:"—",text:"Engineering Applications of Artificial Intelligence"},
+    {year:"—",text:"Computers in Human Behavior Reports"},
+    {year:"—",text:"Data & Knowledge Engineering"},
+    {year:"—",text:"Information Processing and Management"},
+    {year:"—",text:"Journal of Innovation & Knowledge"},
+    {year:"—",text:"International Journal of Industrial Ergonomics"},
+    {year:"—",text:"Intelligent Hospital"},
+  ],
+  committees: [
+    {year:"2025–",text:"IEEE Kansai Section Young Professionals Affinity Group (Member)"},
+    {year:"2024–25",text:"IEEE Kansai Section Young Professionals Affinity Group (Associate)"},
+    {year:"2025",text:"NLP4DH — Program Committee"},
+    {year:"2025–",text:"HUMAI春合宿2026 運営実行委員"},
+  ],
+  talks: [
+    {year:"2025.11",text:"カメラで捉える動物の名前のひみつ（公開講演）"},
+    {year:"2025.09",text:"SIAI#7 産学クロススクエア「ミライを作るAI人材」（複数発表）"},
+    {year:"2025.02",text:"スポーツによる健康・まちづくりについて玉野市へプレゼン"},
+  ],
+  awards_research: [
+    {icon:"🏆",text:"ICITACEE 2024 — Best Paper Award"},
+    {icon:"🏆",text:"IEEE BDCloud 2024 — Best Paper Award"},
+    {icon:"🏆",text:"IEEE IoTaIS 2024 — Best Paper Award"},
+    {icon:"🏆",text:"IEEE DSS 2024 — Best Paper Award"},
+    {icon:"🏆",text:"NLDB 2025 — Best Paper Award"},
+    {icon:"🏆",text:"IEEE ICoAILO 2025 — Best Paper Award"},
+    {icon:"🏆",text:"IEEE HPCC 2025 — Best Paper Award"},
+    {icon:"🎖️",text:"IEEE CyberScieTech/PICom 2025 — Excellent Supporter Award"},
+    {icon:"🎖️",text:"人と仕事の未来研究所 第1回懸賞論文 — 奨励賞"},
+    {icon:"🎖️",text:"第25回理工系学生科学技術論文コンクール — 入賞"},
+    {icon:"🎖️",text:"第44回学生論文昭和池田賞 — 特別奨励賞"},
+    {icon:"🎖️",text:"2025年度情報処理学会関西支部大会 — 支部大会奨励賞"},
+    {icon:"🎖️",text:"関西大学第4回院生合同学術研究ポスター発表大会 — 優秀賞"},
+  ],
+  awards_other: [
+    {icon:"🥇",text:"メ～テレ主催アイデアコンテスト — 最優秀賞・小島プレス工業テーマ賞"},
+    {icon:"🥇",text:"NEC Analytics Challenge Cup 2024 — 最優秀賞"},
+    {icon:"🏅",text:"スポーツ・健康まちづくり学生コンペティション2024 — スポーツ庁長官賞"},
+    {icon:"🏅",text:"APEV 国際ワークショップ — 環境大臣賞"},
+    {icon:"🏅",text:"IEEE R10 Ethics & ERM Student Contest — アジア3位"},
+    {icon:"🎖️",text:"第2回高速道路DXアイデアコンテスト — 優秀賞"},
+    {icon:"🎖️",text:"関西大学KUBIC — 優秀賞"},
+    {icon:"🎖️",text:"Panda杯全日本青年作文コンクール2024 — 優秀賞"},
+    {icon:"🎖️",text:"関西大学SFinX — 優秀賞・協賛企業賞"},
+    {icon:"🎖️",text:"第3回鉄道150年記念障害福祉賞 — 第2位"},
+    {icon:"🎖️",text:"滋賀大学学長賞"},
+    {icon:"🎖️",text:"LODチャレンジ2024 — AI賞"},
+    {icon:"🎖️",text:"LEADING EDGE 四国 — 採択"},
+    {icon:"🎖️",text:"イチBizアワード — 優秀賞"},
+    {icon:"🎖️",text:"岡山ガス ビジネスプランコンテスト — エシカル・データ賞"},
+  ],
+  grants: [
+    {title:"ウェアラブルデバイスとAIを活用した感情変化に寄り添うメンタルヘルス支援システムの開発",org:"公益財団法人パブリックヘルスリサーチセンター — パブリックヘルス科学研究助成金",amount:"採択",period:"2026/4–2027/3"},
+    {title:"感情表現の精緻な制御による人に寄り添う大規模言語モデルの基盤技術に関する研究",org:"公益財団法人GMOインターネット財団 — GMO研究助成",amount:"採択",period:"2026/4–2027/3"},
+    {title:"皮肉生成・理解の双方向学習による語用論的推論を強化した大規模言語モデルの構築",org:"公益財団法人電気通信普及財団 — 研究調査助成",amount:"採択",period:"2026/4–2027/3"},
+    {title:"聴覚障害者の運転行動に着目したリスク検知と視覚的支援インターフェースの開発",org:"公益財団法人交通エコロジー・モビリティ財団 — ECOMO交通バリアフリー研究・活動助成",amount:"採択",period:"2026/4–2027/3"},
+    {title:"感情データの自給自足による自己進化型感情認識AIの構築",org:"日本財団 HUMAIプログラム — 奨励金B",amount:"採択",period:"2025/8–2026/3"},
+    {title:"生成AIによる倫理・法的制約を受けない感情データ生成及び誰もが安心して使えるWell-being支援プラットフォーム",org:"LEADING EDGE 四国",amount:"採択",period:"2025/8–2026/1"},
+    {title:"職場環境のWell-being向上を実現する対話型マルチモーダル感情認識システムの構築",org:"国立研究開発法人科学技術振興機構（JST）次世代研究者挑戦的研究プログラム",amount:"採択",period:"2025/4–2028/3"},
+    {title:"職場環境におけるマルチモーダルLLMを用いた感情シミュレーション＆ゲーミングによる意思決定支援と組織学習の強化",org:"公益財団法人科学技術融合振興財団 — 調査研究補助金",amount:"180,000円",period:"2025/4–2026/3"},
+  ],
+  settings: {
+    formspree_url: "",
+    scholar_url: "",
+    cv_url: "",
+  }
+};
+
+// ─── DATA LAYER ─────────────────────────────────────────────────────────────
+function getData(key){ try{ const v=localStorage.getItem('ki_'+key); return v?JSON.parse(v):DEFAULTS[key]; }catch(e){ return DEFAULTS[key]; } }
+
+// ─── RENDER NEWS ────────────────────────────────────────────────────────────
+function renderNews(){
+  const list=document.getElementById('newsList');
+  const empty=document.getElementById('news-empty');
+  const items=getData('news');
+  list.innerHTML='';
+  if(!items||!items.length){ empty.style.display='block'; return; }
+  empty.style.display='none';
+  const catMap={pub:['Publication','nb-pub'],award:['Award','nb-award'],grant:['Grant','nb-grant'],media:['Media','nb-media']};
+  items.slice(0,10).forEach(n=>{
+    const [label,cls]=catMap[n.cat]||['News','nb-pub'];
+    const el=document.createElement('div'); el.className='news-item';
+    el.innerHTML=`<span class="news-date">${n.date}</span><span class="news-text">${n.text}</span><span class="nbadge ${cls}">${label}</span>`;
+    list.appendChild(el);
+  });
+}
+
+// ─── RENDER PUBLICATIONS ────────────────────────────────────────────────────
+function renderPubs(filter='all'){
+  const list=document.getElementById('pubList');
+  const pubs=getData('publications');
+  list.innerHTML='';
+  const badgeMap={best:['pb-best','🏆 Best Paper Award'],first:['pb-first','First Author'],peer:['pb-first','査読あり'],invited:['pb-first','招待あり']};
+  pubs.forEach(p=>{
+    const el=document.createElement('div');
+    el.className='pub-item reveal'+(filter!=='all'&&p.cat!==filter?' hidden':'');
+    el.dataset.cat=p.cat;
+    const badges=(p.badges||[]).map(b=>{ const[c,l]=badgeMap[b]||['pb-first',b]; return`<span class="pbadge ${c}">${l}</span>`; }).join('');
+    el.innerHTML=`<span class="pub-year">${p.year}</span><div><p class="pub-title">${p.title}</p><p class="pub-authors">${p.authors}</p><p class="pub-venue">${p.venue}</p><div class="pub-badges">${badges}</div></div>`;
+    list.appendChild(el);
+  });
+  setTimeout(initReveal,50);
+}
+
+// ─── RENDER LISTS ────────────────────────────────────────────────────────────
+function renderList(id,key,icon){
+  const el=document.getElementById(id);
+  if(!el)return;
+  const items=getData(key);
+  el.innerHTML=items.map(i=>`<div class="${icon?'award-item':'activity-item'}">${icon?`<span class="aicon">${i.icon||icon}</span><span>${i.text}</span>`:`<span class="ayear">${i.year}</span><span>${i.text}</span>`}</div>`).join('');
+}
+
+function renderGrants(){
+  const el=document.getElementById('grants-list');
+  const items=getData('grants');
+  el.innerHTML=items.map(g=>`<div class="grant-item reveal"><div><p class="grant-title">${g.title}</p><p class="grant-org">${g.org}</p></div><div><p class="grant-amount">${g.amount}</p><p class="grant-period">${g.period}</p></div></div>`).join('');
+}
+
+// ─── RENDER COLUMNS ──────────────────────────────────────────────────────────
+function renderColumns(){
+  const grid=document.getElementById('column-grid');
+  const empty=document.getElementById('col-empty');
+  const cols=getData('columns');
+  grid.innerHTML='';
+  if(!cols||!cols.length){ empty.style.display='block'; grid.appendChild(empty); return; }
+  empty.style.display='none';
+  cols.slice().reverse().forEach(c=>{
+    const card=document.createElement('div'); card.className='column-card reveal';
+    const preview=c.body.replace(/\n/g,' ').slice(0,90)+(c.body.length>90?'…':'');
+    card.innerHTML=`<p class="col-date">${c.date}</p><h3>${c.title}</h3><p>${preview}</p>`;
+    card.onclick=()=>openColModal(c);
+    grid.appendChild(card);
+  });
+  setTimeout(initReveal,50);
+}
+function openColModal(c){
+  document.getElementById('modalDate').textContent=c.date;
+  document.getElementById('modalTitle').textContent=c.title;
+  document.getElementById('modalBody').innerHTML=c.body.split('\n').filter(l=>l.trim()).map(l=>`<p>${l}</p>`).join('');
+  document.getElementById('colModal').classList.add('open');
+}
+function closeColModal(){ document.getElementById('colModal').classList.remove('open'); }
+
+// ─── RESEARCHMAP SYNC ────────────────────────────────────────────────────────
+async function syncResearchmap(){
+  try{
+    const r=await fetch('https://researchmap.jp/keito_inoshita/published_papers?format=json&limit=1',{mode:'cors'});
+    if(!r.ok)return;
+    const d=await r.json();
+    if(d.metadata&&d.metadata.total){ document.getElementById('stat-pubs').textContent=d.metadata.total; }
+  }catch(e){}
+}
+
+// ─── SETTINGS ────────────────────────────────────────────────────────────────
+function applySettings(){
+  const s=getData('settings')||{};
+  if(s.scholar_url){ const l=document.getElementById('scholar-link'); if(l)l.href=s.scholar_url; }
+  if(s.cv_url){ const l=document.getElementById('cv-link'); if(l)l.href=s.cv_url; }
+  if(s.formspree_url){ const n=document.getElementById('form-note'); if(n)n.textContent=''; }
+}
+
+// ─── TAB SYSTEM ──────────────────────────────────────────────────────────────
+function showTab(name){
+  document.querySelectorAll('.tab-page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  const page=document.getElementById('page-'+name);
+  if(page)page.classList.add('active');
+  const btn=document.querySelector('.tab-btn[data-tab="'+name+'"]');
+  if(btn)btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(initReveal,60);
+}
+
+// ─── REVEAL ──────────────────────────────────────────────────────────────────
+function initReveal(){
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*55); obs.unobserve(e.target); } });
+  },{threshold:.06});
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el=>obs.observe(el));
+}
+
+// ─── FILTER PUBS ─────────────────────────────────────────────────────────────
+function filterPubs(btn,cat){
+  document.querySelectorAll('.pub-filter').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.pub-item').forEach(item=>item.classList.toggle('hidden',cat!=='all'&&item.dataset.cat!==cat));
+}
+
+// ─── CONTACT FORM ────────────────────────────────────────────────────────────
+function submitForm(){
+  const s=getData('settings')||{};
+  const url=s.formspree_url;
+  if(url){
+    const data={name:document.getElementById('cf-name').value,email:document.getElementById('cf-email').value,type:document.getElementById('cf-type').value,message:document.getElementById('cf-msg').value};
+    fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+      .then(()=>{ document.getElementById('formSuccess').style.display='block'; setTimeout(()=>document.getElementById('formSuccess').style.display='none',5000); })
+      .catch(()=>alert('送信エラーが発生しました。メールでご連絡ください。'));
+  } else {
+    document.getElementById('formSuccess').style.display='block';
+    setTimeout(()=>document.getElementById('formSuccess').style.display='none',5000);
+  }
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('fyear').textContent=new Date().getFullYear();
+  renderNews();
+  renderPubs();
+  renderList('reviewer-list','reviewers');
+  renderList('committee-list','committees');
+  renderList('talks-list','talks');
+  renderList('awards-research','awards_research',true);
+  renderList('awards-other','awards_other',true);
+  renderGrants();
+  renderColumns();
+  applySettings();
+  syncResearchmap();
+  initReveal();
+});
+</script>
+</body>
+</html>
