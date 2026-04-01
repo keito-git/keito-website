@@ -1,0 +1,24 @@
+name: Sync researchmap
+
+on:
+  schedule:
+    - cron: '0 20 * * *'   # 毎日 JST 05:00 (UTC 20:00)
+  workflow_dispatch:        # 手動実行ボタンも有効
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch researchmap data
+        run: |
+          python3 scripts/fetch_researchmap.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name  "researchmap-bot"
+          git config user.email "bot@keito-website"
+          git add researchmap_data.json
+          git diff --cached --quiet || git commit -m "chore: sync researchmap $(date +'%Y-%m-%d')"
+          git push
