@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Socio-Affective Lab | 井下 敬翔</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fafaf8;--tx:#1a1a18;--mu:#888880;--ac:#2a4a8e;--ac2:#c8502a;--bd:#e4e4de;--card:#f4f4f0;--tag:#eef1f8;--gn:#2a6e3a}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'EB Garamond',Georgia,serif;background:var(--bg);color:var(--tx);font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;background:rgba(250,250,248,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--bd)}
+.nav-inner{display:flex;align-items:center;padding:.9rem 3rem;gap:2.5rem}
+.nav-logo{font-family:'DM Mono',monospace;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--tx);text-decoration:none;white-space:nowrap;font-weight:400}
+.nav-logo span{color:var(--ac)}
+.nav-tabs{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;flex:1}
+.nav-tabs::-webkit-scrollbar{display:none}
+.ntab{font-family:'DM Mono',monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);background:none;border:none;border-bottom:2px solid transparent;padding:.75rem 1.1rem;cursor:pointer;white-space:nowrap;transition:color .2s,border-color .2s}
+.ntab:hover{color:var(--tx)}.ntab.active{color:var(--ac);border-bottom-color:var(--ac)}
+.nav-right{display:flex;align-items:center;gap:1rem;flex-shrink:0}
+.nav-sns a{color:var(--mu);text-decoration:none;font-size:.85rem;transition:color .2s}
+.nav-sns a:hover{color:var(--ac)}
+.nav-admin{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--bd);text-decoration:none;padding:.28rem .55rem;border:1px solid transparent;transition:.2s}
+.nav-admin:hover{color:var(--mu);border-color:var(--bd)}
+
+/* ── TAB PAGES ── */
+.tab-page{display:none;padding-top:52px}.tab-page.active{display:block}
+
+/* ── HERO ── */
+.hero{display:grid;grid-template-columns:1fr 380px;min-height:calc(100vh - 52px);border-bottom:1px solid var(--bd)}
+.hero-left{padding:5rem 3rem;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--bd)}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ac);margin-bottom:1.2rem;opacity:0;animation:fadeUp .6s ease .1s forwards}
+.hero h1{font-size:clamp(2.6rem,4vw,4rem);font-weight:400;line-height:1.08;margin-bottom:1.4rem;opacity:0;animation:fadeUp .6s ease .22s forwards}
+.hero h1 em{font-style:italic;color:var(--ac)}
+.hero-affils{margin-bottom:1.6rem;opacity:0;animation:fadeUp .6s ease .35s forwards}
+.affil-item{font-size:.9rem;color:#555550;line-height:1.7;display:flex;align-items:baseline;gap:.5rem}
+.affil-item::before{content:'—';color:var(--mu);font-size:.75rem;flex-shrink:0}
+.hero-bio{font-size:.97rem;color:#555550;line-height:1.85;max-width:520px;margin-bottom:1.8rem;opacity:0;animation:fadeUp .6s ease .45s forwards}
+.hero-tags{display:flex;flex-wrap:wrap;gap:.4rem;opacity:0;animation:fadeUp .6s ease .55s forwards}
+.hero-tag{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.1em;padding:.25rem .65rem;background:var(--tag);color:var(--ac);border:1px solid #c8d4f0}
+
+/* Hero right panel */
+.hero-right{display:flex;flex-direction:column}
+.hero-photo-wrap{flex:1;position:relative;overflow:hidden;min-height:320px}
+.hero-photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.hero-photo-placeholder{width:100%;height:100%;background:linear-gradient(160deg,#c8d8f0,#8aacdc);display:flex;align-items:center;justify-content:center;font-family:'EB Garamond',serif;font-size:4rem;color:white;opacity:.7}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--bd)}
+.hstat{padding:1.2rem;text-align:center;border-right:1px solid var(--bd)}
+.hstat:last-child{border-right:none}
+.hstat-num{font-family:'EB Garamond',serif;font-size:2rem;font-weight:400;color:var(--ac);line-height:1}
+.hstat-label{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);margin-top:.25rem}
+
+/* Recruit Banner */
+.recruit-banner{background:var(--ac);color:white;padding:1rem 1.5rem;font-size:.82rem;line-height:1.6}
+.recruit-banner strong{display:block;font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.35rem;opacity:.8}
+
+/* ── HOME NEWS ── */
+.home-news{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--bd)}
+.hn-col{padding:2.8rem 3rem}
+.hn-col:first-child{border-right:1px solid var(--bd)}
+.hn-label{font-family:'DM Mono',monospace;font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ac);margin-bottom:.5rem}
+.hn-title{font-size:1.3rem;font-weight:400;margin-bottom:1.5rem}
+.news-list{display:flex;flex-direction:column}
+.news-item{display:grid;grid-template-columns:90px 1fr auto;align-items:start;padding:.72rem 0;border-bottom:1px solid var(--bd);gap:1rem}
+.news-item:first-child{border-top:1px solid var(--bd)}
+.ndate{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.08em;color:var(--mu);padding-top:.1rem}
+.ntext{font-size:.9rem;line-height:1.55}
+.nbadge{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;padding:.15rem .48rem;white-space:nowrap}
+.nb-pub{background:var(--tag);color:var(--ac);border:1px solid #c8d4f0}
+.nb-award{background:#fff4f0;color:var(--ac2);border:1px solid #f8c8b4}
+.nb-grant{background:#f0f8f0;color:var(--gn);border:1px solid #b4d8b8}
+.nb-media{background:#f8f4e8;color:#6e4e1a;border:1px solid #d8c898}
+.nb-event{background:#f4f0ff;color:#5030a0;border:1px solid #d0c0f0}
+.empty-note{font-family:'DM Mono',monospace;font-size:.63rem;color:var(--mu);padding:1rem 0;letter-spacing:.06em}
+
+/* ── SECTION COMMONS ── */
+.page-section{padding:4rem 3rem;border-bottom:1px solid var(--bd)}
+.sec-label{font-family:'DM Mono',monospace;font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ac);margin-bottom:.5rem}
+.sec-title{font-size:clamp(1.8rem,2.8vw,2.5rem);font-weight:400;line-height:1.2;margin-bottom:.8rem}
+.sec-title em{font-style:italic}
+.sec-intro{font-size:.93rem;color:var(--mu);max-width:580px;margin-bottom:2.8rem}
+
+/* ── ABOUT ── */
+.about-layout{display:grid;grid-template-columns:1fr 320px;gap:4rem;align-items:start}
+.about-photo{position:sticky;top:70px}
+.about-photo img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top}
+.about-photo-placeholder{width:100%;aspect-ratio:3/4;background:linear-gradient(160deg,#c8d8f0,#8aacdc);display:flex;align-items:center;justify-content:center;font-family:'EB Garamond',serif;font-size:3rem;color:white;opacity:.7}
+.about-body{}
+.about-block{margin-bottom:2.5rem}
+.about-block-title{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ac);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--bd)}
+.bio-text{font-size:.97rem;color:#444440;line-height:1.9}
+.bio-text p+p{margin-top:.9rem}
+.timeline{display:flex;flex-direction:column}
+.tl-item{display:grid;grid-template-columns:110px 1fr;gap:1rem;padding:.8rem 0;border-bottom:1px solid var(--bd);font-size:.88rem}
+.tl-item:first-child{border-top:1px solid var(--bd)}
+.tl-date{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--mu);padding-top:.15rem}
+.tl-body{}
+.tl-main{font-weight:500;line-height:1.4;margin-bottom:.15rem}
+.tl-sub{font-size:.82rem;color:var(--mu)}
+.affil-list{display:flex;flex-direction:column;gap:.6rem}
+.affil-row{background:var(--card);border:1px solid var(--bd);padding:.85rem 1.1rem}
+.affil-name{font-weight:500;font-size:.93rem}
+.affil-detail{font-size:.82rem;color:var(--mu);margin-top:.15rem}
+.kw-cloud{display:flex;flex-wrap:wrap;gap:.4rem}
+.kw-chip{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.08em;padding:.25rem .65rem;background:var(--tag);color:var(--ac);border:1px solid #c8d4f0}
+.comm-list{display:flex;flex-direction:column}
+.comm-item{display:grid;grid-template-columns:120px 1fr;gap:1rem;padding:.75rem 0;border-bottom:1px solid var(--bd);font-size:.88rem}
+.comm-item:first-child{border-top:1px solid var(--bd)}
+.comm-period{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--mu);padding-top:.15rem}
+.society-list{display:flex;flex-wrap:wrap;gap:.4rem}
+.soc-chip{font-size:.82rem;padding:.2rem .6rem;background:var(--card);border:1px solid var(--bd);color:var(--mu)}
+
+/* ── RESEARCH ── */
+.research-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.rc{background:var(--card);border:1px solid var(--bd);overflow:hidden;transition:border-color .2s,transform .2s}
+.rc:hover{border-color:var(--ac);transform:translateY(-3px)}
+.rc-img{width:100%;height:140px;object-fit:cover;display:block;background:linear-gradient(135deg,#c8d4f0,#8aacdc)}
+.rc-img-placeholder{width:100%;height:140px;background:linear-gradient(135deg,#e4eaf8,#c0cce8);display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--ac);opacity:.5}
+.rc-body{padding:1.5rem}
+.rc-tag{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ac);margin-bottom:.6rem}
+.rc h3{font-size:.97rem;font-weight:500;margin-bottom:.5rem;line-height:1.4}
+.rc p{font-size:.84rem;color:var(--mu);line-height:1.7}
+
+/* ── PUBLICATIONS ── */
+.pub-filters{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:2rem}
+.pf{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .82rem;border:1px solid var(--bd);background:none;color:var(--mu);cursor:pointer;transition:.2s}
+.pf.active{background:var(--tx);color:var(--bg);border-color:var(--tx)}
+.rmap-note{font-family:'DM Mono',monospace;font-size:.61rem;letter-spacing:.07em;color:var(--mu);margin-bottom:1.8rem;padding:.65rem 1rem;border-left:2px solid var(--ac);background:var(--tag)}
+.rmap-note a{color:var(--ac)}
+.pub-list{display:flex;flex-direction:column}
+.pub-item{display:grid;grid-template-columns:70px 1fr;gap:1.5rem;padding:1.4rem 0;border-bottom:1px solid var(--bd)}
+.pub-item:first-child{border-top:1px solid var(--bd)}
+.pub-item.hidden{display:none}
+.pub-year{font-family:'DM Mono',monospace;font-size:.63rem;color:var(--mu);padding-top:.18rem}
+.pub-title{font-size:.93rem;font-weight:500;margin-bottom:.25rem;line-height:1.5}
+.pub-title a{color:inherit;text-decoration:none}
+.pub-title a:hover{color:var(--ac);text-decoration:underline}
+.pub-authors{font-size:.82rem;color:var(--mu);font-style:italic;margin-bottom:.2rem}
+.pub-authors strong{font-style:normal;color:var(--tx);font-weight:500}
+.pub-venue{font-family:'DM Mono',monospace;font-size:.59rem;letter-spacing:.07em;color:var(--ac);line-height:1.5}
+.pub-badges{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.4rem}
+.pb{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.07em;padding:.12rem .45rem}
+.pb-best{background:#fff4f0;color:var(--ac2);border:1px solid #f8c8b4}
+.pb-first{background:var(--tag);color:var(--ac);border:1px solid #c8d4f0}
+.pb-manual{background:#f8f0ff;color:#6030a0;border:1px solid #d0b0f0}
+
+/* ── ACTIVITIES (card grid) ── */
+.act-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.act-card{background:var(--card);border:1px solid var(--bd);padding:1.6rem;cursor:pointer;transition:border-color .2s,transform .2s}
+.act-card:hover{border-color:var(--ac);transform:translateY(-3px)}
+.act-date{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;color:var(--mu);margin-bottom:.6rem}
+.act-card h3{font-size:.93rem;font-weight:500;margin-bottom:.5rem;line-height:1.4}
+.act-card p{font-size:.84rem;color:var(--mu);line-height:1.65}
+.act-type{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.18rem .5rem;margin-bottom:.6rem;display:inline-block}
+.at-social{background:#f0f8ff;color:#1a5a9e;border:1px solid #b8d4f0}
+.at-other{background:var(--tag);color:var(--ac);border:1px solid #c8d4f0}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg);border:1px solid var(--bd);padding:2.8rem;max-width:640px;width:90%;max-height:85vh;overflow-y:auto;position:relative}
+.modal h2{font-size:1.4rem;font-weight:400;margin-bottom:.4rem;line-height:1.3}
+.modal-meta{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--mu);margin-bottom:1.6rem}
+.modal-body{font-size:.95rem;line-height:1.85;color:#444440}
+.modal-body p+p{margin-top:.9rem}
+.modal-close{position:absolute;top:1rem;right:1.2rem;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);cursor:pointer;background:none;border:none}
+.modal-close:hover{color:var(--tx)}
+
+/* ── AWARDS ── */
+.awards-cols{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.awards-group-title{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mu);margin-bottom:1rem}
+.award-item{display:flex;gap:.7rem;align-items:flex-start;padding:.65rem 0;border-bottom:1px solid var(--bd);font-size:.88rem;line-height:1.5}
+.award-item:first-child{border-top:1px solid var(--bd)}
+.aw-icon{flex-shrink:0;padding-top:.05rem}
+.aw-text{}
+.aw-year{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--mu);display:block;margin-top:.15rem}
+
+/* ── GRANTS ── */
+.grants-list{display:flex;flex-direction:column}
+.grant-item{padding:1.3rem 0;border-bottom:1px solid var(--bd)}
+.grant-item:first-child{border-top:1px solid var(--bd)}
+.grant-title{font-size:.93rem;font-weight:500;margin-bottom:.3rem;line-height:1.5}
+.grant-org{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.07em;color:var(--ac);margin-bottom:.2rem}
+.grant-meta{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--mu);display:flex;gap:1rem}
+
+/* ── COLUMN ── */
+.col-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.col-card{background:var(--card);border:1px solid var(--bd);padding:1.6rem;cursor:pointer;transition:border-color .2s,transform .2s}
+.col-card:hover{border-color:var(--ac);transform:translateY(-3px)}
+.col-date{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;color:var(--mu);margin-bottom:.6rem}
+.col-card h3{font-size:.95rem;font-weight:500;margin-bottom:.5rem;line-height:1.45}
+.col-card p{font-size:.84rem;color:var(--mu);line-height:1.65}
+
+/* ── CONTACT ── */
+.contact-form{display:flex;flex-direction:column;gap:.9rem;max-width:560px}
+.form-group{display:flex;flex-direction:column;gap:.35rem}
+.flabel{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mu)}
+.finput,.fselect,.ftextarea{width:100%;padding:.6rem .85rem;border:1px solid var(--bd);background:var(--bg);font-family:'EB Garamond',Georgia,serif;font-size:.93rem;color:var(--tx);outline:none;transition:border-color .2s;appearance:none}
+.finput:focus,.fselect:focus,.ftextarea:focus{border-color:var(--ac)}
+.ftextarea{resize:vertical;min-height:120px}
+.fselect{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7'%3E%3Cpath d='M0 0l5.5 7L11 0z' fill='%23888'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .85rem center;padding-right:2.4rem}
+.form-success{display:none;font-family:'DM Mono',monospace;font-size:.66rem;letter-spacing:.1em;color:var(--gn);padding:.7rem 1rem;background:#f0f8f0;border:1px solid #b4d8b8;margin-top:.5rem}
+.btn-submit{align-self:flex-start;margin-top:.4rem;padding:.65rem 1.6rem;background:var(--tx);color:var(--bg);font-family:'DM Mono',monospace;font-size:.67rem;letter-spacing:.12em;text-transform:uppercase;border:none;cursor:pointer;transition:background .2s}
+.btn-submit:hover{background:var(--ac)}
+
+footer{padding:1.8rem 3rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--bd)}
+.fc{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.1em;color:var(--mu)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:960px){
+  .nav-inner{padding:.8rem 1.2rem;gap:1rem}
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-right{display:none}
+  .hero-left{padding:3rem 1.5rem}
+  .home-news{grid-template-columns:1fr}
+  .hn-col:first-child{border-right:none;border-bottom:1px solid var(--bd)}
+  .page-section{padding:3rem 1.5rem}
+  .about-layout{grid-template-columns:1fr;gap:2rem}
+  .about-photo{display:none}
+  .research-grid,.act-grid,.col-grid,.awards-cols{grid-template-columns:1fr}
+  .pub-item{grid-template-columns:55px 1fr;gap:.9rem}
+  footer{padding:1.5rem;flex-direction:column;gap:.4rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#" onclick="showTab('home');return false">Socio&#8209;<span>Affective</span> Lab</a>
+    <div class="nav-tabs">
+      <button class="ntab active" onclick="showTab('home')" data-tab="home">Home</button>
+      <button class="ntab" onclick="showTab('about')" data-tab="about">About</button>
+      <button class="ntab" onclick="showTab('research')" data-tab="research">Research</button>
+      <button class="ntab" onclick="showTab('publications')" data-tab="publications">Publications</button>
+      <button class="ntab" onclick="showTab('awards')" data-tab="awards">Awards</button>
+      <button class="ntab" onclick="showTab('grants')" data-tab="grants">Grants</button>
+      <button class="ntab" onclick="showTab('activities')" data-tab="activities">Activities</button>
+      <button class="ntab" onclick="showTab('column')" data-tab="column">Column</button>
+      <button class="ntab" onclick="showTab('contact')" data-tab="contact">Contact</button>
+    </div>
+    <div class="nav-right">
+      <div class="nav-sns">
+        <a href="https://x.com/keito0data" target="_blank" title="X (Twitter)">𝕏</a>
+        &nbsp;
+        <a href="https://scholar.google.com/citations?user=xG4rs0kAAAAJ&hl=ja" target="_blank" title="Google Scholar">GS</a>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ HOME ═══ -->
+<div class="tab-page active" id="page-home">
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Researcher · Data Scientist</p>
+      <h1>井下 敬翔<br><em>Keito Inoshita</em></h1>
+      <div class="hero-affils" id="hero-affils">
+        <div class="affil-item">関西大学大学院 商学研究科 博士後期課程（JST SPRINGスカラシップ）</div>
+        <div class="affil-item">滋賀大学 データサイエンス・AIイノベーション研究推進センター 客員研究員</div>
+        <div class="affil-item">日本セーフティソサイエティ研究センター 研究員</div>
+      </div>
+      <p class="hero-bio" id="hero-bio">感情の生成から認識、人間との感情に基づくインタラクションといった感情計算論に関する一連の流れを専門とし、Well-beingな社会を実現するためのAI基盤技術の研究に取り組んでいます。</p>
+      <div class="hero-tags" id="hero-tags">
+        <span class="hero-tag">Large Language Models</span>
+        <span class="hero-tag">Affective Computing</span>
+        <span class="hero-tag">Multi-Agent Systems</span>
+        <span class="hero-tag">Data Generation</span>
+        <span class="hero-tag">Interdisciplinary Research</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-photo-wrap" id="hero-photo-wrap">
+        <img src="photo.jpg" alt="井下敬翔" onerror="this.style.display='none';document.getElementById('hero-photo-placeholder').style.display='flex'">
+        <div id="hero-photo-placeholder" class="hero-photo-placeholder" style="display:none">井下</div>
+      </div>
+      <div class="hero-stats">
+        <div class="hstat"><div class="hstat-num" id="stat-pubs">—</div><div class="hstat-label">Publications</div></div>
+        <div class="hstat"><div class="hstat-num" id="stat-awards">—</div><div class="hstat-label">Awards</div></div>
+        <div class="hstat"><div class="hstat-num" id="stat-grants">—</div><div class="hstat-label">Grants</div></div>
+      </div>
+      <div class="recruit-banner" id="recruit-banner">
+        <strong>🔬 Recruiting Collaborators</strong>
+        共同研究者・研究パートナーを募集しています。LLM・感情AI・データ生成に関心のある方(特に学生)、ぜひご連絡ください。<strong style="color:#ffd080">研究費は負担します。</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWS -->
+  <div class="home-news">
+    <div class="hn-col">
+      <p class="hn-label">Schedule</p>
+      <h2 class="hn-title">今後の予定</h2>
+      <div class="news-list" id="schedule-list">
+        <p class="empty-note" id="schedule-empty">予定はありません。管理画面から追加できます。</p>
+      </div>
+    </div>
+    <div class="hn-col">
+      <p class="hn-label">News &amp; Updates</p>
+      <h2 class="hn-title">お知らせ</h2>
+      <div class="news-list" id="news-list">
+        <p class="empty-note" id="news-empty" style="display:none">お知らせはありません。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ABOUT ═══ -->
+<div class="tab-page" id="page-about">
+  <section class="page-section">
+    <p class="sec-label reveal">About</p>
+    <h2 class="sec-title reveal">井下 敬翔</h2>
+    <div class="about-layout">
+      <div class="about-body">
+        <!-- Bio -->
+        <div class="about-block reveal">
+          <div class="about-block-title">Biography</div>
+          <div class="bio-text" id="about-bio-text">
+            <p>関西大学大学院商学研究科博士後期課程（JST SPRINGスカラシップ研究学生）。大規模言語モデル（LLM）を中核に、感情認識・AIバイアス・Well-being支援AIの研究を展開。</p>
+            <p>特にLLMの政治的・感情的バイアスの定量評価と除去手法が国際的に評価され、国際会議Best Paper Awardを7件受賞。JST次世代研究者挑戦的研究プログラムをはじめ8件の競争的資金を獲得。</p>
+            <p>研究の枠を超え、ビジネスプランコンテスト・政策提言・社会貢献活動にも積極的に取り組む。NeurIPS・IEEE TAC等の主要国際誌・会議のReviewerも務める。</p>
+          </div>
+        </div>
+        <!-- Affiliations -->
+        <div class="about-block reveal">
+          <div class="about-block-title">所属</div>
+          <div class="affil-list" id="about-affils"></div>
+        </div>
+        <!-- Experience -->
+        <div class="about-block reveal">
+          <div class="about-block-title">経歴</div>
+          <div class="timeline" id="about-experience"></div>
+        </div>
+        <!-- Education -->
+        <div class="about-block reveal">
+          <div class="about-block-title">学歴</div>
+          <div class="timeline" id="about-education"></div>
+        </div>
+        <!-- Research Keywords -->
+        <div class="about-block reveal">
+          <div class="about-block-title">研究キーワード</div>
+          <div class="kw-cloud" id="about-keywords"></div>
+        </div>
+        <!-- Committee -->
+        <div class="about-block reveal">
+          <div class="about-block-title">委員歴・組織活動</div>
+          <div class="comm-list" id="about-committees"></div>
+        </div>
+        <!-- Reviewer -->
+        <div class="about-block reveal">
+          <div class="about-block-title">査読活動</div>
+          <div class="comm-list" id="about-reviewers"></div>
+        </div>
+        <!-- Societies -->
+        <div class="about-block reveal">
+          <div class="about-block-title">所属学会</div>
+          <div class="society-list" id="about-societies"></div>
+        </div>
+      </div>
+      <div class="about-photo">
+        <img src="photo.jpg" alt="井下敬翔" onerror="this.style.display='none';document.getElementById('about-photo-ph').style.display='flex'">
+        <div id="about-photo-ph" class="about-photo-placeholder" style="display:none">井下</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══ RESEARCH ═══ -->
+<div class="tab-page" id="page-research">
+  <section class="page-section">
+    <p class="sec-label reveal">Research</p>
+    <h2 class="sec-title reveal">研究<em>テーマ</em></h2>
+    <p class="sec-intro reveal">LLMを核に、感情・バイアス・データ生成・社会応用の四領域を横断する研究を展開しています。</p>
+    <div class="research-grid" id="research-grid"></div>
+  </section>
+</div>
+
+<!-- ═══ PUBLICATIONS ═══ -->
+<div class="tab-page" id="page-publications">
+  <section class="page-section">
+    <p class="sec-label reveal">Publications</p>
+    <h2 class="sec-title reveal">発表<em>業績</em></h2>
+    <div class="rmap-note reveal">
+      📌 researchmapと同期済み（最終更新: <span id="sync-date">—</span>）| <a href="https://researchmap.jp/keito_inoshita" target="_blank">researchmap →</a>
+    </div>
+    <div class="pub-filters reveal">
+      <button class="pf active" onclick="filterPubs(this,'all')">All <span id="pf-all-count"></span></button>
+      <button class="pf" onclick="filterPubs(this,'paper')">論文 <span id="pf-paper-count"></span></button>
+      <button class="pf" onclick="filterPubs(this,'misc')">MISC <span id="pf-misc-count"></span></button>
+      <button class="pf" onclick="filterPubs(this,'presentation')">講演・口頭発表 <span id="pf-pres-count"></span></button>
+    </div>
+    <div class="pub-list" id="pub-list"></div>
+  </section>
+</div>
+
+<!-- ═══ AWARDS ═══ -->
+<div class="tab-page" id="page-awards">
+  <section class="page-section">
+    <p class="sec-label reveal">Awards</p>
+    <h2 class="sec-title reveal">受賞<em>歴</em></h2>
+    <div class="awards-cols">
+      <div class="reveal">
+        <p class="awards-group-title">研究に関する受賞</p>
+        <div id="awards-research"></div>
+      </div>
+      <div class="reveal">
+        <p class="awards-group-title">コンテスト・学業等</p>
+        <div id="awards-other"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══ GRANTS ═══ -->
+<div class="tab-page" id="page-grants">
+  <section class="page-section">
+    <p class="sec-label reveal">Grants &amp; Funding</p>
+    <h2 class="sec-title reveal">競争的資金等<em>研究課題</em></h2>
+    <div class="grants-list" id="grants-list"></div>
+  </section>
+</div>
+
+<!-- ═══ ACTIVITIES ═══ -->
+<div class="tab-page" id="page-activities">
+  <section class="page-section">
+    <p class="sec-label reveal">Activities</p>
+    <h2 class="sec-title reveal">社会貢献<em>活動</em></h2>
+    <p class="sec-intro reveal">講演・社会貢献・メディア出演などの活動をまとめています。</p>
+    <div class="act-grid" id="act-grid"></div>
+  </section>
+</div>
+
+<!-- ═══ COLUMN ═══ -->
+<div class="tab-page" id="page-column">
+  <section class="page-section">
+    <p class="sec-label reveal">Research Column</p>
+    <h2 class="sec-title reveal">研究<em>コラム</em></h2>
+    <p class="sec-intro reveal">LLM・感情AI・社会とAIの関係について、研究者の視点から定期的に発信します。</p>
+    <div class="col-grid" id="col-grid">
+      <p class="empty-note" id="col-empty">まだコラムはありません。</p>
+    </div>
+  </section>
+</div>
+
+<!-- ═══ CONTACT ═══ -->
+<div class="tab-page" id="page-contact">
+  <section class="page-section">
+    <p class="sec-label reveal">Contact</p>
+    <h2 class="sec-title reveal">お問い<em>合わせ</em></h2>
+    <p class="sec-intro reveal">共同研究・研究相談・講演依頼・メディア取材・学生からのご相談など、お気軽にご連絡ください。原則として5営業日以内にご返信いたします。</p>
+    <div class="contact-form reveal">
+      <div class="form-group"><label class="flabel">お名前</label><input type="text" class="finput" id="cf-name" placeholder="山田 太郎"></div>
+      <div class="form-group"><label class="flabel">メールアドレス</label><input type="email" class="finput" id="cf-email" placeholder="example@email.com"></div>
+      <div class="form-group">
+        <label class="flabel">お問い合わせの種類</label>
+        <select class="fselect" id="cf-type">
+          <option value="">選択してください</option>
+          <option>共同研究のご相談</option><option>講演・登壇依頼</option>
+          <option>メディア取材</option><option>学術的なご質問</option><option>その他</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="flabel">メッセージ</label><textarea class="ftextarea" id="cf-msg" placeholder="お問い合わせ内容をご記入ください..."></textarea></div>
+      <div class="form-success" id="form-success">✓ 送信されました。近日中にご返信いたします。</div>
+      <button class="btn-submit" onclick="submitForm()">送信する</button>
+      <p style="font-family:'DM Mono',monospace;font-size:.58rem;color:var(--mu);margin-top:.6rem" id="form-note"></p>
+    </div>
+  </section>
+</div>
+
+<!-- Modals -->
+<div class="modal-overlay" id="actModal"><div class="modal"><button class="modal-close" onclick="closeModal('actModal')">✕ 閉じる</button><p class="modal-meta" id="actModalMeta"></p><h2 id="actModalTitle"></h2><div class="modal-body" id="actModalBody"></div></div></div>
+<div class="modal-overlay" id="colModal"><div class="modal"><button class="modal-close" onclick="closeModal('colModal')">✕ 閉じる</button><p class="modal-meta" id="colModalDate"></p><h2 id="colModalTitle"></h2><div class="modal-body" id="colModalBody"></div></div></div>
+
+<footer>
+  <span class="fc">© <span id="fyear"></span> Keito Inoshita · Socio-Affective Lab</span>
+  <span class="fc">
+    <a href="https://x.com/keito0data" target="_blank" style="color:var(--mu);text-decoration:none;margin-right:.8rem">X →</a>
+    <a href="https://scholar.google.com/citations?user=xG4rs0kAAAAJ&hl=ja" target="_blank" style="color:var(--mu);text-decoration:none">Google Scholar →</a>
+  </span>
+</footer>
+
+<script>
+// ── DATA HELPERS ─────────────────────────────────────────────────────────────
+function lsGet(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
+function lsSet(k,v){ localStorage.setItem(k,JSON.stringify(v)); }
+function mGet(k){ return lsGet('ki_manual_'+k)||[]; }
+function sGet(){ return lsGet('ki_settings')||{}; }
+
+let RMAP = null;
+
+async function loadRmap(){
+  try{
+    const r=await fetch('researchmap_data.json?_='+Date.now());
+    if(!r.ok) throw new Error('no file');
+    RMAP=await r.json();
+    lsSet('ki_rmap_cache',RMAP);
+  }catch(e){
+    RMAP=lsGet('ki_rmap_cache');
+  }
+  return RMAP;
+}
+
+// Merge: researchmap items + manual items (manual never deleted by rm)
+function merge(rmItems, manualKey){
+  const manual = mGet(manualKey);
+  return [...(rmItems||[]), ...manual];
+}
+
+// ── STATS ─────────────────────────────────────────────────────────────────────
+function updateStats(){
+  const rmPubs=(RMAP?.publications?.length||0)+(RMAP?.misc?.length||0)+(RMAP?.presentations?.length||0);
+  const manPubs=mGet('publications').length;
+  document.getElementById('stat-pubs').textContent=rmPubs+manPubs||'—';
+
+  // Awards: use override cat (user_cat from localStorage overrides rm cat)
+  const awCats=lsGet('ki_award_cats')||{};
+  const allAwards=[...(RMAP?.awards||[]),...mGet('awards')];
+  document.getElementById('stat-awards').textContent=allAwards.length||'—';
+
+  const manGrants=mGet('grants').length;
+  document.getElementById('stat-grants').textContent=manGrants||'—';
+}
+
+// ── HOME NEWS ─────────────────────────────────────────────────────────────────
+function renderHomeNews(){
+  // Schedule (手動のみ)
+  const schedules=mGet('schedules');
+  const sl=document.getElementById('schedule-list');
+  const se=document.getElementById('schedule-empty');
+  if(schedules.length){
+    se.style.display='none';
+    sl.innerHTML=schedules.map(s=>`
+      <div class="news-item">
+        <span class="ndate">${s.date||''}</span>
+        <span class="ntext">${s.text}</span>
+        <span class="nbadge nb-event">${s.cat||'Event'}</span>
+      </div>`).join('');
+  } else {
+    se.style.display='block';
+    sl.innerHTML=''; sl.appendChild(se);
+  }
+
+  // News: manual + auto from rmap
+  const manNews=mGet('news');
+  // Auto news from rmap: new publications / awards from last sync
+  const autoNews=lsGet('ki_auto_news')||[];
+  const allNews=[...manNews,...autoNews].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+
+  const nl=document.getElementById('news-list');
+  const ne=document.getElementById('news-empty');
+  if(!allNews.length){ ne.style.display='block'; nl.innerHTML=''; nl.appendChild(ne); return; }
+  ne.style.display='none';
+  const catMap={pub:['nb-pub','Publication'],award:['nb-award','Award'],grant:['nb-grant','Grant'],media:['nb-media','Media'],auto:['nb-pub','Auto']};
+  nl.innerHTML=allNews.slice(0,12).map(n=>{
+    const[cls,lbl]=catMap[n.cat]||['nb-pub','News'];
+    return`<div class="news-item"><span class="ndate">${n.date||''}</span><span class="ntext">${n.text}</span><span class="nbadge ${cls}">${lbl}</span></div>`;
+  }).join('');
+}
+
+// ── ABOUT ─────────────────────────────────────────────────────────────────────
+function renderAbout(){
+  // Bio text
+  const customBio=lsGet('ki_about_bio');
+  if(customBio){
+    document.getElementById('about-bio-text').innerHTML=customBio.split('\n').filter(l=>l.trim()).map(l=>`<p>${l}</p>`).join('');
+  }
+
+  // Affiliations — manual only
+  const affils=mGet('about_affiliations');
+  document.getElementById('about-affils').innerHTML=affils.map(a=>`
+    <div class="affil-row">
+      <div class="affil-name">${a.name}</div>
+      <div class="affil-detail">${[a.section,a.job].filter(Boolean).join(' · ')}</div>
+    </div>`).join('')||'<p class="empty-note">管理画面から追加してください</p>';
+
+  // Research Experience — manual only
+  const exp=mGet('about_experience');
+  document.getElementById('about-experience').innerHTML=exp.map(e=>{
+    const period=[e.from_date,e.to_date].filter(Boolean).join('–');
+    return`<div class="tl-item">
+      <span class="tl-date">${period}</span>
+      <div><div class="tl-main">${e.affiliation}</div><div class="tl-sub">${[e.section,e.job].filter(Boolean).join(' / ')}</div></div>
+    </div>`;
+  }).join('')||'<p class="empty-note">管理画面から追加してください</p>';
+
+  // Education — manual only
+  const edu=mGet('about_education');
+  document.getElementById('about-education').innerHTML=edu.map(e=>{
+    const period=[e.from_date,e.to_date].filter(Boolean).join('–');
+    return`<div class="tl-item">
+      <span class="tl-date">${period}</span>
+      <div><div class="tl-main">${e.affiliation}</div><div class="tl-sub">${[e.department,e.course].filter(Boolean).join(' ')}</div></div>
+    </div>`;
+  }).join('')||'<p class="empty-note">管理画面から追加してください</p>';
+
+  // Keywords — manual only
+  const kws=mGet('about_keywords');
+  document.getElementById('about-keywords').innerHTML=kws.map(k=>`<span class="kw-chip">${k.text||k}</span>`).join('')||'<p class="empty-note">管理画面から追加してください</p>';
+
+  // Committees — manual only
+  const comms=mGet('committees');
+  document.getElementById('about-committees').innerHTML=comms.map(c=>`
+    <div class="comm-item">
+      <span class="comm-period">${c.year||'—'}</span>
+      <span>${c.text}</span>
+    </div>`).join('')||'<p class="empty-note">管理画面から追加してください</p>';
+
+  // Reviewers — manual only
+  const revs=mGet('reviewers');
+  document.getElementById('about-reviewers').innerHTML=revs.map(r=>`
+    <div class="comm-item">
+      <span class="comm-period">${r.year||'—'}</span>
+      <span>${r.text}</span>
+    </div>`).join('')||'<p class="empty-note">管理画面から追加してください</p>';
+
+  // Societies — manual only
+  const socs=mGet('about_societies');
+  document.getElementById('about-societies').innerHTML=socs.map(s=>`<span class="soc-chip">${s.name||s}</span>`).join('')||'<p class="empty-note">管理画面から追加してください</p>';
+}
+
+// ── RESEARCH ─────────────────────────────────────────────────────────────────
+function renderResearch(){
+  const items=mGet('research_themes');
+  const defaults=[
+    {tag:'LLM Bias Analysis',title:'LLMのバイアス分析と除去',body:'LLMの政治的・感情的バイアスを定量評価し、除去手法を研究。安全保障分野向けコーパス開発も実施。',img:''},
+    {tag:'Emotion AI',title:'感情認識とWell-being支援',body:'職場環境の感情シミュレーション・マルチモーダル感情認識を研究。ウェアラブル×AIによるメンタルヘルス支援システムの開発を目指す。',img:''},
+    {tag:'Synthetic Data',title:'合成データ生成',body:'LLMを活用した感情データの自動生成・拡張技術を研究。倫理的制約を受けない感情データ生成と自己進化型感情認識AIの構築に取り組む。',img:''},
+    {tag:'Model Merging',title:'進化的モデルマージ',body:'進化的アルゴリズムを応用した多段階モデルマージ手法を開発。感情分析・アスペクト分析に特化したLLMの構築と評価を行っている。',img:''},
+    {tag:'NLP Applications',title:'自然言語処理の応用',body:'皮肉検出・学名分類・法律知識評価など多様なLLM応用研究。デジタルヒューマニティーズとNLPの融合領域にも取り組む。',img:''},
+    {tag:'Social AI',title:'社会・政策へのAI応用',body:'Twitter上の戦争認識分析、GPTの法律知識評価、AIガバナンス指針策定など、社会課題に向き合うAI研究を展開する。',img:''},
+  ];
+  const themes=items.length?items:defaults;
+  document.getElementById('research-grid').innerHTML=themes.map(t=>`
+    <div class="rc reveal">
+      ${t.img?`<img class="rc-img" src="${t.img}" alt="${t.title}">`:`<div class="rc-img-placeholder">🔬</div>`}
+      <div class="rc-body">
+        <p class="rc-tag">${t.tag||''}</p>
+        <h3>${t.title}</h3>
+        <p>${t.body}</p>
+      </div>
+    </div>`).join('');
+  setTimeout(initReveal,50);
+}
+
+// ── PUBLICATIONS ─────────────────────────────────────────────────────────────
+let allPubItems=[];
+function renderPublications(){
+  if(!RMAP) return;
+  if(RMAP.fetched_at) document.getElementById('sync-date').textContent=RMAP.fetched_at.slice(0,10);
+
+  const badgeMap={best:['pb-best','🏆 Best Paper'],first:['pb-first','First Author'],peer:['pb-first','査読あり'],invited:['pb-first','招待あり'],manual:['pb-manual','手動追加']};
+
+  function pubHTML(p, pubType){
+    const badges=[...(p.badges||[])];
+    if(p.source==='manual') badges.push('manual');
+    const bHtml=badges.map(b=>{ const[c,l]=badgeMap[b]||['pb-first',b]; return`<span class="pb ${c}">${l}</span>`; }).join('');
+    const titleEl=p.doi?`<a href="${p.doi}" target="_blank">${p.title}</a>`:(p.title||'');
+    return`<div class="pub-item reveal" data-pubtype="${pubType}">
+      <span class="pub-year">${p.year||'—'}</span>
+      <div>
+        <p class="pub-title">${titleEl}</p>
+        <p class="pub-authors">${p.authors||''}</p>
+        <p class="pub-venue">${p.venue||''}</p>
+        <div class="pub-badges">${bHtml}</div>
+      </div>
+    </div>`;
+  }
+
+  // Build combined list: papers, misc, presentations, manual
+  const papers=[...(RMAP.publications||[]),...mGet('publications')];
+  const miscs=[...(RMAP.misc||[]),...mGet('misc')];
+  const preses=[...(RMAP.presentations||[]),...mGet('presentations')];
+
+  const paperHTML=papers.map(p=>pubHTML(p,'paper')).join('');
+  const miscHTML=miscs.map(p=>pubHTML(p,'misc')).join('');
+  const presHTML=preses.map(p=>{
+    const pp={...p};
+    if(!pp.authors && pp.presenters) pp.authors=pp.presenters;
+    // venue: event名を使う
+    if(!pp.venue && pp.event) pp.venue=pp.event;
+    // year: より詳細な日付を使う
+    if(pp.date && pp.date.length>=7) pp.year=pp.date.slice(0,7);
+    return pubHTML(pp,'presentation');
+  }).join('');
+
+  document.getElementById('pub-list').innerHTML=paperHTML+miscHTML+presHTML||'<p class="empty-note">データなし</p>';
+
+  // Update counts
+  document.getElementById('pf-all-count').textContent=`(${papers.length+miscs.length+preses.length})`;
+  document.getElementById('pf-paper-count').textContent=`(${papers.length})`;
+  document.getElementById('pf-misc-count').textContent=`(${miscs.length})`;
+  document.getElementById('pf-pres-count').textContent=`(${preses.length})`;
+  setTimeout(initReveal,50);
+}
+function filterPubs(btn, type){
+  document.querySelectorAll('.pf').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+  document.querySelectorAll('.pub-item').forEach(el=>el.classList.toggle('hidden', type!=='all'&&el.dataset.pubtype!==type));
+}
+
+// ── AWARDS ───────────────────────────────────────────────────────────────────
+function renderAwards(){
+  const awCats=lsGet('ki_award_cats')||{}; // {rm_id: 'research'|'other'}
+  const manAwards=mGet('awards');
+  const rmAwards=RMAP?.awards||[];
+  const allAwards=[...rmAwards,...manAwards];
+
+  const research=[], other=[];
+  allAwards.forEach(a=>{
+    // admin override takes priority
+    const cat=awCats[a.rm_id||a.id]||a.cat||'research';
+    if(cat==='other') other.push(a); else research.push(a);
+  });
+
+  function awHTML(items){
+    return items.map(a=>`
+      <div class="award-item">
+        <span class="aw-icon">${a.icon||'🎖️'}</span>
+        <span class="aw-text">${a.text}${a.org?`<span style="color:var(--mu);font-size:.82rem"> (${a.org})</span>`:''}<span class="aw-year">${a.date||a.year||''}</span></span>
+      </div>`).join('');
+  }
+  document.getElementById('awards-research').innerHTML=awHTML(research)||'<p class="empty-note">データなし</p>';
+  document.getElementById('awards-other').innerHTML=awHTML(other)||'<p class="empty-note">データなし</p>';
+}
+
+// ── GRANTS ───────────────────────────────────────────────────────────────────
+function renderGrants(){
+  const all=mGet('grants');
+  document.getElementById('grants-list').innerHTML=all.map(g=>`
+    <div class="grant-item reveal">
+      <div class="grant-title">${g.title||''}</div>
+      <div class="grant-org">${g.org||''}</div>
+      <div class="grant-meta">
+        <span>${g.amount||'採択'}</span>
+        ${g.start&&g.end?`<span>${g.start}–${g.end==='9999'?'現在':g.end}</span>`:g.period?`<span>${g.period}</span>`:''}
+      </div>
+    </div>`).join('')||'<p class="empty-note">データなし</p>';
+  setTimeout(initReveal,50);
+}
+
+// ── ACTIVITIES ───────────────────────────────────────────────────────────────
+function renderActivities(){
+  const rmSocial=RMAP?.social||[];
+  const manActs=mGet('activities');
+  const all=[...rmSocial,...manActs];
+  const grid=document.getElementById('act-grid');
+  if(!all.length){ grid.innerHTML='<p class="empty-note">データなし</p>'; return; }
+  grid.innerHTML=all.map((a,i)=>`
+    <div class="act-card reveal" onclick="openActModal(${i})">
+      <span class="act-type ${a.type==='social'||a.social?'at-social':'at-other'}">${a.type||'Activity'}</span>
+      <p class="act-date">${a.year||a.date||''}</p>
+      <h3>${a.title||a.text||''}</h3>
+      <p>${(a.text||a.body||'').slice(0,80)}${(a.text||a.body||'').length>80?'…':''}</p>
+    </div>`).join('');
+  window._actItems=all;
+  setTimeout(initReveal,50);
+}
+function openActModal(i){
+  const a=window._actItems[i]; if(!a) return;
+  document.getElementById('actModalMeta').textContent=a.year||a.date||'';
+  document.getElementById('actModalTitle').textContent=a.title||a.text||'';
+  document.getElementById('actModalBody').innerHTML=(a.body||a.text||'').split('\n').filter(l=>l.trim()).map(l=>`<p>${l}</p>`).join('');
+  document.getElementById('actModal').classList.add('open');
+}
+
+// ── COLUMN ───────────────────────────────────────────────────────────────────
+function renderColumns(){
+  const cols=mGet('columns');
+  const grid=document.getElementById('col-grid');
+  const empty=document.getElementById('col-empty');
+  if(!cols.length){ grid.innerHTML=''; grid.appendChild(empty); empty.style.display='block'; return; }
+  empty.style.display='none';
+  grid.innerHTML=[...cols].reverse().map(c=>`
+    <div class="col-card reveal" onclick="openColModal(${c.id})">
+      <p class="col-date">${c.date}</p>
+      <h3>${c.title}</h3>
+      <p>${c.body.replace(/\n/g,' ').slice(0,85)}${c.body.length>85?'…':''}</p>
+    </div>`).join('');
+  setTimeout(initReveal,50);
+}
+function openColModal(id){
+  const c=mGet('columns').find(x=>x.id===id); if(!c) return;
+  document.getElementById('colModalDate').textContent=c.date;
+  document.getElementById('colModalTitle').textContent=c.title;
+  document.getElementById('colModalBody').innerHTML=c.body.split('\n').filter(l=>l.trim()).map(l=>`<p>${l}</p>`).join('');
+  document.getElementById('colModal').classList.add('open');
+}
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+
+// ── CONTACT ──────────────────────────────────────────────────────────────────
+function submitForm(){
+  const s=sGet();
+  const data={name:document.getElementById('cf-name').value,email:document.getElementById('cf-email').value,type:document.getElementById('cf-type').value,message:document.getElementById('cf-msg').value};
+  if(s.formspree_url){
+    fetch(s.formspree_url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+      .then(()=>showFormSuccess()).catch(()=>alert('送信エラー。メールでご連絡ください: inosita.2865@gmail.com'));
+  } else { showFormSuccess(); }
+}
+function showFormSuccess(){
+  const el=document.getElementById('form-success'); el.style.display='block';
+  setTimeout(()=>el.style.display='none',5000);
+}
+
+// ── SETTINGS ─────────────────────────────────────────────────────────────────
+function applySettings(){
+  const s=sGet();
+  if(!s.formspree_url){
+    const n=document.getElementById('form-note');
+    if(n) n.textContent='※ 管理画面でFormspreeを設定するとメールが届くようになります。';
+  }
+  // Recruit banner
+  const rb=lsGet('ki_recruit_text');
+  if(rb){ const el=document.getElementById('recruit-banner'); if(el) el.innerHTML=rb; }
+}
+
+// ── TAB / REVEAL ─────────────────────────────────────────────────────────────
+function showTab(name){
+  document.querySelectorAll('.tab-page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ntab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  const btn=document.querySelector('.ntab[data-tab="'+name+'"]'); if(btn) btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(initReveal,60);
+}
+function initReveal(){
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*50); obs.unobserve(e.target); } });
+  },{threshold:.05});
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el=>obs.observe(el));
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', async ()=>{
+  document.getElementById('fyear').textContent=new Date().getFullYear();
+  await loadRmap();
+  renderHomeNews();
+  renderAbout();
+  renderResearch();
+  renderPublications();
+  renderAwards();
+  renderGrants();
+  renderActivities();
+  renderColumns();
+  updateStats();
+  applySettings();
+  initReveal();
+});
+</script>
+</body>
+</html>
