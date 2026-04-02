@@ -1,0 +1,356 @@
+{
+  "news": [
+    {
+      "id": 6,
+      "date": "2026/04/01",
+      "text": "論文（プレプリント）\"Does AI Homogenize Student Thinking? A Multi-Dimensional Analysis of Structural Convergence in AI-Augmented Essays\"を公開しました",
+      "cat": "pub",
+      "source": "manual"
+    },
+    {
+      "id": 5,
+      "date": "2026/04/01",
+      "text": "公益財団法人 交通エコロジー・モビリティ財団のECOMO交通バリアフリー研究・活動助成に採択されました",
+      "cat": "grant",
+      "source": "manual"
+    },
+    {
+      "id": 4,
+      "date": "2026/04/01",
+      "text": "公益財団法人 パブリックヘルスリサーチセンターのパブリックヘルス科学研究助成金に採択されました",
+      "cat": "grant",
+      "source": "manual"
+    },
+    {
+      "id": 3,
+      "date": "2026/04/01",
+      "text": "公益財団法人ＧＭＯインターネット財団のGMO研究助成制度に採択されました",
+      "cat": "grant",
+      "source": "manual"
+    },
+    {
+      "id": 1,
+      "date": "2026.04.01",
+      "text": "公益財団法人 電気通信普及財団の研究調査助成に採択されました",
+      "cat": "grant",
+      "source": "manual"
+    }
+  ],
+  "committees": [
+    {
+      "id": 1,
+      "year": "2025/09-2026/03",
+      "text": "HUMAI春合宿2026運営-実行委員",
+      "source": "manual"
+    },
+    {
+      "id": 2,
+      "year": "2025/04-現在",
+      "text": "IEEE Kansai Section Young Professionals Affinity Group-Member",
+      "source": "manual"
+    },
+    {
+      "id": 3,
+      "year": "2025/01-2025/04",
+      "text": "International Conference on Natural Language Processing for Digital Humanities (NLP4DH)-Program Committee",
+      "source": "manual"
+    },
+    {
+      "id": 4,
+      "year": "2024/10-2025/04",
+      "text": "IEEE Kansai Section Young Professionals Affinity Group-Associate",
+      "source": "manual"
+    }
+  ],
+  "reviewers": [
+    {
+      "id": 1,
+      "year": "—",
+      "text": "Intelligent Hospital",
+      "source": "manual"
+    },
+    {
+      "id": 2,
+      "year": "—",
+      "text": "Engineering Applications of Artificial Intelligence",
+      "source": "manual"
+    },
+    {
+      "id": 3,
+      "year": "—",
+      "text": "Information Fusion",
+      "source": "manual"
+    },
+    {
+      "id": 4,
+      "year": "—",
+      "text": "Journal of Innovation & Knowledge",
+      "source": "manual"
+    },
+    {
+      "id": 5,
+      "year": "—",
+      "text": "Information Processing and Management",
+      "source": "manual"
+    },
+    {
+      "id": 6,
+      "year": "—",
+      "text": "International Journal of Industrial Ergonomics",
+      "source": "manual"
+    },
+    {
+      "id": 7,
+      "year": "—",
+      "text": "Data & Knowledge Engineering",
+      "source": "manual"
+    },
+    {
+      "id": 8,
+      "year": "—",
+      "text": "Computers in Human Behavior Reports",
+      "source": "manual"
+    },
+    {
+      "id": 9,
+      "year": "—",
+      "text": "International Journal of Information Management Data Insights",
+      "source": "manual"
+    },
+    {
+      "id": 10,
+      "year": "—",
+      "text": "Annual Conference on Neural Information Processing Systems",
+      "source": "manual"
+    },
+    {
+      "id": 11,
+      "year": "—",
+      "text": "Workshop on Large Language Models for Music & Audio",
+      "source": "manual"
+    },
+    {
+      "id": 12,
+      "year": "—",
+      "text": "日本認知科学会",
+      "source": "manual"
+    },
+    {
+      "id": 13,
+      "year": "—",
+      "text": "Natural Language Processing for Digital Humanities",
+      "source": "manual"
+    },
+    {
+      "id": 14,
+      "year": "—",
+      "text": "IEEE Transactions on Affective Computing",
+      "source": "manual"
+    }
+  ],
+  "research_themes": [
+    {
+      "id": 1,
+      "tag": "Emotional Data Generation",
+      "title": "感情データの生成",
+      "body": "大規模言語モデルを活用した感情データの生成を行なっています。これにより、人間からは表出していない感情表現を獲得し、学習データの拡張やデータ取得が困難な領域に対して生成したデータで補完することが可能となります。",
+      "img": "",
+      "source": "manual"
+    }
+  ],
+  "about_affiliations": [
+    {
+      "id": 1,
+      "name": "関西大学",
+      "section": "大学院 商学研究科　商学専攻",
+      "job": "博士課程後期課程",
+      "source": "manual"
+    },
+    {
+      "id": 2,
+      "name": "滋賀大学",
+      "section": "データサイエンス・AIイノベーション研究推進センター",
+      "job": "客員研究員",
+      "source": "manual"
+    },
+    {
+      "id": 3,
+      "name": "日本セーフティソサイエティ研究センター",
+      "section": "",
+      "job": "研究員",
+      "source": "manual"
+    }
+  ],
+  "about_experience": [
+    {
+      "id": 3,
+      "affiliation": "国立研究開発法人科学技術振興機構 (JST)",
+      "section": "次世代研究者挑戦的研究プログラム (SPRING)",
+      "job": "関西大学SPRINGスカラシップ研究学生",
+      "from_date": "2025/04",
+      "to_date": "現在",
+      "source": "manual"
+    },
+    {
+      "id": 2,
+      "affiliation": "日本セーフティソサイエティ研究センター",
+      "section": "",
+      "job": "研究員",
+      "from_date": "2025/04",
+      "to_date": "現在",
+      "source": "manual"
+    },
+    {
+      "id": 4,
+      "affiliation": "滋賀大学",
+      "section": "データサイエンス・AIイノベーション研究推進センター",
+      "job": "客員研究員",
+      "from_date": "2025/04",
+      "to_date": "現在",
+      "source": "manual"
+    },
+    {
+      "id": 5,
+      "affiliation": "立命館大学",
+      "section": "立命館グローバル・イノベーション研究機構",
+      "job": "客員研究員",
+      "from_date": "2025/12",
+      "to_date": "2026/03",
+      "source": "manual"
+    }
+  ],
+  "about_education": [
+    {
+      "id": 1,
+      "affiliation": "関西大学",
+      "department": "大学院商学研究科",
+      "course": "博士課程後期課程",
+      "from_date": "2025/04",
+      "to_date": "現在",
+      "source": "manual"
+    },
+    {
+      "id": 2,
+      "affiliation": "滋賀大学",
+      "department": "大学院データサイエンス研究科",
+      "course": "博士前期課程",
+      "from_date": "2023/04",
+      "to_date": "2025/03",
+      "source": "manual"
+    },
+    {
+      "id": 3,
+      "affiliation": "札幌大学（飛び級のための3年次終了時点で中退）",
+      "department": "地域共創学群",
+      "course": "経営学専攻",
+      "from_date": "2020/4",
+      "to_date": "2023/3",
+      "source": "manual"
+    }
+  ],
+  "about_keywords": [
+    {
+      "id": 1,
+      "text": "大規模言語モデル",
+      "source": "manual"
+    },
+    {
+      "id": 2,
+      "text": "感情計算論",
+      "source": "manual"
+    },
+    {
+      "id": 3,
+      "text": "マルチエージェントシステム",
+      "source": "manual"
+    },
+    {
+      "id": 4,
+      "text": "データ生成",
+      "source": "manual"
+    },
+    {
+      "id": 5,
+      "text": "異分野融合研究",
+      "source": "manual"
+    }
+  ],
+  "about_societies": [
+    {
+      "id": 1,
+      "name": "電子情報通信学会",
+      "source": "manual"
+    },
+    {
+      "id": 2,
+      "name": "日本感性工学会",
+      "source": "manual"
+    },
+    {
+      "id": 3,
+      "name": "情報知識学会",
+      "source": "manual"
+    },
+    {
+      "id": 4,
+      "name": "日本情動学会",
+      "source": "manual"
+    },
+    {
+      "id": 5,
+      "name": "日本データベース学会",
+      "source": "manual"
+    },
+    {
+      "id": 6,
+      "name": "言語処理学会",
+      "source": "manual"
+    },
+    {
+      "id": 7,
+      "name": "人工知能学会",
+      "source": "manual"
+    },
+    {
+      "id": 8,
+      "name": "ACL (Association for Computational Linguistics)",
+      "source": "manual"
+    },
+    {
+      "id": 9,
+      "name": "IEEE Computer Society",
+      "source": "manual"
+    },
+    {
+      "id": 10,
+      "name": "情報処理学会",
+      "source": "manual"
+    }
+  ],
+  "_settings": {},
+  "_award_cats": {
+    "49035005": "other",
+    "49035015": "other",
+    "49035032": "other",
+    "49035048": "other",
+    "49035052": "other",
+    "49035061": "other",
+    "49035064": "other",
+    "49035076": "other",
+    "49035087": "other",
+    "49035090": "other",
+    "49035105": "other",
+    "49035109": "other",
+    "49035116": "other",
+    "49035120": "other",
+    "49035144": "other",
+    "49035164": "other",
+    "49238165": "other",
+    "50776911": "other",
+    "50857933": "other",
+    "51334443": "other",
+    "52135660": "other"
+  },
+  "_auto_news": [],
+  "_about_bio": "関西大学大学院商学研究科博士課程後期課程2年生に在学。大規模言語モデルを中核に、感情データの生成から認識、人間とのインタラクションにおける感情の影響など、感情xAIに関連する一連の研究を行っている。AGIやASIの実現には感情を理解し幅広く使える能力が必須と考え、人間の感情に関する能力を内容するAIを作ることを目標としている。\n\nそのほかにも、異分野融合方の研究を他方に展開しており、生物学や化学、経済学や歴史学といった多様な領域の研究者とのコラボレーションにより、異分野におけるAI活用を促進し新たな知見の創出を行っている。\n\n企業との研究も進めており、現在3社との共同研究を推進中。研究成果の社会実装を目標として、実用的なAIの開発も行っている。"
+}
